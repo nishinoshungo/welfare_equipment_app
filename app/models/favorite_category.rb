@@ -1,0 +1,2 @@
+class FavoriteCategory < ApplicationRecord
+end
