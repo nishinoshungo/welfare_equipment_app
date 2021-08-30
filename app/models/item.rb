@@ -5,4 +5,9 @@ class Item < ApplicationRecord
   has_many :order_items
   has_many :item_categories, dependent: :destroy
   has_many :reviews, dependent: :destroy
+
+  attachment :image
+
+  enum is_active: {レンタル可: true, レンタル不可: false}
+
 end

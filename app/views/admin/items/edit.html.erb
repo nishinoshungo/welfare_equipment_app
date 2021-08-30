@@ -1,0 +1,18 @@
+<h1>商品編集</h1>
+<%= form_with model: @item, url: "/admin/items/#{@item.id}", local:true do |f| %>
+  <label>商品画像</label>
+  <%= f.attachment_field :image %>
+  <label>商品名</label>
+  <%= f.text_field :name %>
+  <label>商品説明</label>
+  <%= f.text_area :introduction %>
+  <label>ジャンル</label>
+  <%= f.collection_select(:genre_id, @genres, :id, :name, {prompt: "ジャンルを選択してください"}) %>
+  <label>レンタル料金</label>
+  <%= f.text_field :price %>円
+  <label>在庫数</label>
+  <%= f.number_field :stock, min: 1, max: 99 %>
+  <label>商品ステータス</label>
+  <%= f.radio_button :is_active, "レンタル可" %>レンタル可<%= f.radio_button :is_active, "レンタル不可" %>レンタル不可
+  <%= f.submit "変更する" %>
+<% end %>
