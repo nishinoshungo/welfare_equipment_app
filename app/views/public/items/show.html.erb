@@ -1,0 +1,36 @@
+<h1>商品詳細</h1>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <%= attachment_image_tag @item, :image, :fill, 100, 100, format: 'jpg' %>
+    </div>
+    <div class="col">
+      <table>
+        <tbody>
+          <tr>
+            <td>商品名</td>
+            <td><%= @item.name %></td>
+          </tr>
+          <tr>
+            <td>説明</td>
+            <td><%= @item.introduction %></td>
+          </tr>
+          <tr>
+            <td>月額</td>
+            <td><%= @item.price %>円</td>
+          </tr>
+          <tr>
+            <td><%= current_customer.burden_ratio %>額</td>
+            <td><%= (@item.price * current_customer.burden_ratio.to_i * 0.1).floor %>円</td>
+          </tr>
+        </tbody>
+      </table>
+      <%= form_with model: @cart_item, url: '/cart_items', local:true do |f| %>
+        <%= f.number_field :amount, min: 1, max: 10 %>
+        <%= f.hidden_field :item_id, value: @item.id %>
+        <%= f.hidden_field :customer_id, value: current_customer.id %>
+        <%= f.submit "お買い物かごに入れる" %>
+      <% end %>
+    </div>
+  </div>
+</div>
