@@ -38,4 +38,10 @@ Rails.application.routes.draw do
   delete '/cart_items', to: 'public/cart_items#destroy_all'
   post '/cart_items', to: 'public/cart_items#create'
 
+  get '/orders/confirm', to: 'public/orders#confirm'
+  get '/orders/complete', to: 'public/orders#complete'
+  get '/orders', to: 'public/orders#index'
+  get '/orders/:id', to: 'public/orders#show'
+  post '/orders', to: 'public/orders#create'
+
 end
