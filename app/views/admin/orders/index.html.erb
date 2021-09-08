@@ -1,0 +1,32 @@
+<h4>注文履歴一覧</h4>
+<table class="table">
+  <thead>
+    <tr>
+      <th>注文ID</th>
+      <th>注文日時</th>
+      <th>注文者名</th>
+      <th>注文金額</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.id %></td>
+        <td>
+          <%= link_to admin_order_path(order) do%>
+            <%= order.created_at %>
+          <% end %>
+        </td>
+        <td><%= order.customer.last_name %> <%= order.customer.first_name %></td>
+        <td>
+          <% total_price = 0 %> <!--total_priceを定義 -->
+          <% order.order_items.each do |order_item| %> <!--注文商品合計金額の計算-->
+            <% subtotal = order_item.price * order_item.amount %>
+            <% total_price = total_price + subtotal %>
+          <% end %>
+          <%= total_price %> <!--合計金額の表示-->
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

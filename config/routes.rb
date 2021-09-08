@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :genres, only: [:index, :create, :edit, :update]
     resources :items, only: [:index, :new, :create, :show, :edit, :update]
+    resources :customers, only: [:index, :show, :edit, :update]
+    resources :orders, only: [:index, :show]
   end
   devise_for :admin, controllers: {
     sessions: 'devise_admins/sessions',
@@ -30,6 +32,7 @@ Rails.application.routes.draw do
   patch '/customers/withdraw', to: 'public/customers#withdraw'
 
   get '/items', to: 'public/items#index'
+  get '/search', to: 'public/items#search'
   get '/items/:id', to: 'public/items#show'
 
   get '/cart_items', to: 'public/cart_items#index'

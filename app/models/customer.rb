@@ -11,5 +11,6 @@ class Customer < ApplicationRecord
   has_many :reviews
 
   enum burden_ratio: {"1割負担": 1, "2割負担": 2, "3割負担": 3, "10割負担": 4}
+  enum is_active: {"有効": true, "退会": false}
 
 end

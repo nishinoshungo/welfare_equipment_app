@@ -1,0 +1,43 @@
+<h1>会員情報編集</h1>
+<%= form_with model: @customer, url: "/admin/customers/#{@customer.id}", local:true do |f| %>
+  <table class="table table-borderless">
+    <tbody>
+      <tr>
+        <td><%= f.label :名前 %></td>
+        <td><%= f.text_field :last_name, placeholder: "姓", autofocus: true %> <%= f.text_field :first_name, placeholder: "名" %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :フリガナ %></td>
+        <td><%= f.text_field :last_name_kana, placeholder: "セイ" %> <%= f.text_field :first_name_kana, placeholder: "メイ" %></td>
+      </tr>
+      <tr>
+        <td><%=f.label :メールアドレス %></td>
+        <td><%= f.text_field :email, size: 30 %></td>
+      </tr>
+      <tr>
+        <td><%=f.label :"郵便番号(ハイフンなし)" %></td>
+        <td><%= f.text_field :postal_code %></td>
+      </tr>
+      <tr>
+        <td><%=f.label :住所 %></td>
+        <td><%= f.text_field :address, size: 60 %></td>
+      </tr>
+      <tr>
+        <td><%=f.label :"電話番号(ハイフンなし)" %></td>
+        <td><%= f.text_field :telephone_number %></td>
+      </tr>
+      <tr>
+        <td><%=f.label :介護保険負担割合 %></td>
+        <td><%= f.select :burden_ratio, [["1割負担", "1割負担"], ["2割負担", "2割負担"], ["3割負担", "3割負担"], ["10割負担", "10割負担"]] %></td>
+      </tr>
+      <tr>
+        <td><%=f.label :顧客ステータス %></td>
+        <td><%= f.radio_button :is_active, "有効" %>有効 <%= f.radio_button :is_active, "退会" %>退会</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><%= f.submit "変更" %></td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>

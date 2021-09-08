@@ -1,2 +1,32 @@
-<h1>Public::Orders#index</h1>
-<p>Find me in app/views/public/orders/index.html.erb</p>
+<h4>ご注文履歴</h4>
+<table class="table">
+  <thead>
+    <tr>
+      <th>ご注文日</th>
+      <th>ご注文商品</th>
+      <th>合計金額</th>
+      <th>ご負担額</th>
+      <th>ご注文詳細</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.created_at %></td>
+        <td>
+          <% total_price = 0 %>
+          <% copayment = 0 %>
+          <% order.order_items.each do |order_item| %>
+            <%= order_item.item.name %><br>
+            <% subtotal = order_item.item.price * order_item.amount %>
+            <% total_price = total_price + subtotal %>
+            <% copayment = (total_price * current_customer.burden_ratio.to_i * 0.1).floor %>
+          <% end %>
+        </td>
+        <td><%= total_price %></td>
+        <td><%= copayment %></td>
+        <td><%= link_to "表示する", "/orders/#{order.id}", class: "btn btn-primary" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

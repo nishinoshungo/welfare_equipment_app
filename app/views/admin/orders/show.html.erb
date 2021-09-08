@@ -12,12 +12,12 @@
   </thead>
   <tbody>
     <% total_price = 0 %>
-    <% @order.order_items.each do |cart_item| %>
-      <% subtotal = cart_item.item.price * cart_item.amount %>
+    <% @order.order_items.each do |order_item| %>
+      <% subtotal = order_item.item.price * order_item.amount %>
       <tr>
-        <td><%= cart_item.item.name %></td>
-        <td><%= cart_item.item.price %></td>
-        <td><%= cart_item.amount %></td>
+        <td><%= order_item.item.name %></td>
+        <td><%= order_item.item.price %></td>
+        <td><%= order_item.amount %></td>
         <td><%= subtotal %></td>
       </tr>
       <% total_price = total_price + subtotal %>
@@ -33,8 +33,8 @@
       <td><%= total_price %></td>
     </tr>
     <tr>
-      <td><%= current_customer.burden_ratio %>額</td>
-      <td><%= (total_price * current_customer.burden_ratio.to_i * 0.1).floor %></td>
+      <td><%= @order.customer.burden_ratio %>額</td>
+      <td><%= (total_price * @order.customer.burden_ratio.to_i * 0.1).floor %></td>
     </tr>
   </tbody>
 </table>
@@ -44,23 +44,23 @@
   <tbody>
     <tr>
       <td>ご注文者名</td>
-      <td><%= current_customer.last_name %> <%= current_customer.first_name %></td>
+      <td><%= @order.customer.last_name %> <%= @order.customer.first_name %></td>
     </tr>
     <tr>
       <td>住所</td>
-      <td><%= current_customer.address %></td>
+      <td><%= @order.customer.address %></td>
     </tr>
     <tr>
       <td>電話番号</td>
-      <td><%= current_customer.telephone_number %></td>
+      <td><%= @order.customer.telephone_number %></td>
     </tr>
     <tr>
       <td>メールアドレス</td>
-      <td><%= current_customer.email %></td>
+      <td><%= @order.customer.email %></td>
     </tr>
     <tr>
       <td>介護保険負担割合</td>
-      <td><%= current_customer.burden_ratio %></td>
+      <td><%= @order.customer.burden_ratio %></td>
     </tr>
   </tbody>
 </table>

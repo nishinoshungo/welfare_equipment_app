@@ -1,8 +1,10 @@
 class Public::OrdersController < ApplicationController
   def index
+    @orders = current_customer.orders
   end
 
   def show
+    @order = Order.find(params[:id])
   end
 
   def create
@@ -10,7 +12,7 @@ class Public::OrdersController < ApplicationController
     order = Order.new
     order.customer_id = current_customer.id
     order.save
-    
+
     # order_itemsテーブルに注文された商品を１つずつ保存する
     cart_items = current_customer.cart_items
     cart_items.each do |cart_item|
@@ -21,7 +23,7 @@ class Public::OrdersController < ApplicationController
       order_item.amount = cart_item.amount
       order_item.save
     end
-    
+
     # 注文確定後、かごの中身を空にし、注文完了画面へ
     cart_items.destroy_all
     redirect_to "/orders/complete"

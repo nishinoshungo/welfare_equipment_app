@@ -5,7 +5,13 @@
   <%= f.submit "登録" %>
 <% end %>
 
-<% @genres.each do |genre| %>
-  <%= genre.name %>
-  <%= link_to "編集", edit_admin_genre_path(genre) %>
-<% end %>
+<table class="table table-borderless">
+  <tbody>
+    <% @genres.each do |genre| %>
+      <tr>
+        <td><%= genre.name %></td>
+        <td><%= link_to "編集", edit_admin_genre_path(genre) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
