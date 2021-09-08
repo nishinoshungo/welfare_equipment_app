@@ -35,6 +35,10 @@ Rails.application.routes.draw do
   get '/search', to: 'public/items#search'
   get '/items/:id', to: 'public/items#show'
 
+  get '/customers/favorite_items', to: 'public/favorite_items#index'
+  post '/customers/favorite_items', to: 'public/favorite_items#create', as: :create_favorite_items
+  delete '/customers/favorite_items/:id', to: 'public/favorite_items#destroy', as: :destroy_favorite_items
+
   get '/cart_items', to: 'public/cart_items#index'
   patch '/cart_items/:id', to: 'public/cart_items#update'
   delete '/cart_items/:id', to: 'public/cart_items#destroy'

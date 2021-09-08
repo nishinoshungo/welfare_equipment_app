@@ -1,0 +1,13 @@
+<h4>お気に入り商品一覧</h4>
+<% if @favorite_items.count == 0 %>
+  <p>お気に入りされた商品がありません。</p>
+<% else %>
+  <% @favorite_items.each do |favorite_item| %>
+    <%= link_to "/items/#{favorite_item.item_id}" do %>
+      <%= attachment_image_tag favorite_item.item, :image, :fill, 100, 100, format: 'jpg' %>
+    <% end %>
+    <%= favorite_item.item.name %>
+    <%= favorite_item.item.price %>円
+  <% end %>
+<% end %>
+

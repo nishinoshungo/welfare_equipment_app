@@ -23,6 +23,7 @@
           <% elsif customer_signed_in? %>
             <li><%= link_to "マイページ", customers_my_page_path %></li>
             <li><%= link_to "商品一覧", items_path %></li>
+            <li><%= link_to "お気に入り商品", customers_favorite_items_path %></li>
             <li><%= link_to "お買い物かご", cart_items_path %></li>
             <li><%= link_to "ログアウト", destroy_customer_session_path, method: :delete %></li>
           <% else %>

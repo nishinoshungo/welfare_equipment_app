@@ -5,7 +5,7 @@
       <%= attachment_image_tag @item, :image, :fill, 100, 100, format: 'jpg' %>
     </div>
     <div class="col">
-      <table>
+      <table class="table">
         <tbody>
           <tr>
             <td>商品名</td>
@@ -25,6 +25,14 @@
           </tr>
         </tbody>
       </table>
+
+      <% if current_customer.already_favorited?(@item) %>
+        <%= link_to "お気に入り解除", destroy_favorite_items_path(item_id: @item.id), method: :delete %>
+      <% else %>
+        <%= link_to "お気に入り登録", create_favorite_items_path(item_id: @item.id), method: :post %>
+      <% end %>
+      (<%= @item.favorite_items.count %>人がお気に入りしています。)
+
       <%= form_with model: @cart_item, url: '/cart_items', local:true do |f| %>
         <%= f.number_field :amount, min: 1, max: 10 %>
         <%= f.hidden_field :item_id, value: @item.id %>
