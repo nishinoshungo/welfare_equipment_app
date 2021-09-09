@@ -30,4 +30,8 @@ class Public::ItemsController < ApplicationController
       redirect_to items_path
     end
   end
+
+  def recommend
+  end
+
 end

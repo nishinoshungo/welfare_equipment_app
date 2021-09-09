@@ -30,6 +30,15 @@
         <td><label>商品ステータス</label></td>
         <td><%= f.radio_button :is_active, "レンタル可" %>レンタル可<%= f.radio_button :is_active, "レンタル不可" %>レンタル不可</td>
       </tr>
+      <%= f.collection_check_boxes(:category_ids, Category.all, :id, :name) do |category| %>
+        <tr>
+          <td></td>
+          <td>
+            <%= category.check_box %>
+            <%= category.text %>
+          </td>
+        </tr>
+      <% end %>
       <tr>
         <td></td>
         <td><%= f.submit "登録する", class: "btn btn-success" %></td>

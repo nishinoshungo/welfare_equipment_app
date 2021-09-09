@@ -1,0 +1,5 @@
+<h4>カテゴリ編集</h4>
+<%= form_with model: @category, url: "/admin/categories/#{@category.id}", local:true do |f| %>
+  <%= f.text_field :name, size: 60 %>
+  <%= f.submit "変更する" %>
+<% end %>

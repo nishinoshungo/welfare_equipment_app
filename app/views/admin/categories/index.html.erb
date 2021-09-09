@@ -1,0 +1,19 @@
+<h4>カテゴリ一覧・追加</h4>
+<%= form_with model: @category, url: "/admin/categories", local:true do |f| %>
+  <%= f.text_field :name, size: 60 %>
+  <%= f.submit "カテゴリ追加" %>
+<% end %>
+<table class="table table-borderless">
+  <tbody>
+    <% @categories.each do |category| %>
+      <tr>
+        <td><%= category.name %></td>
+        <td>
+          <%= link_to "編集", edit_admin_category_path(category), class: "btn btn-primary" %>
+          <%= link_to "削除", "/admin/categories/#{category.id}", method: :delete, class: "btn btn-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

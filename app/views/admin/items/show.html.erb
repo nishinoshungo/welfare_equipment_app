@@ -1,4 +1,4 @@
-<h1>商品詳細ページ</h1>
+<h4>商品詳細ページ</h4>
 <%= attachment_image_tag @item, :image, :fill, 100, 100, format: 'jpg' %>
 <table>
   <tbody>
@@ -29,3 +29,8 @@
   </tbody>
 </table>
 <%= link_to "編集する", edit_admin_item_path(@item) %>
+
+<h6>商品カテゴリの一覧</h6>
+<% @item.categories.each do |category| %>
+  <%= category.name %>
+<% end %>

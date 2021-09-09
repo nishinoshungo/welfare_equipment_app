@@ -1,6 +1,6 @@
 <h1>会員情報編集</h1>
 <%= form_with model: current_customer, url: '/customers', local:true do |f| %>
-  <table>
+  <table class="table table-borderless">
     <tbody>
       <tr>
         <td><%= f.label :名前 %></td>
@@ -30,10 +30,24 @@
         <td><%=f.label :介護保険負担割合 %></td>
         <td><%= f.select :burden_ratio, [["1割負担", "1割負担"], ["2割負担", "2割負担"], ["3割負担", "3割負担"], ["10割負担", "10割負担"]] %></td>
       </tr>
-      <tr>
-        <td></td>
-        <td><%= f.submit "変更" %></td>
-      </tr>
     </tbody>
   </table>
+  <table class="table table-borderless">
+    <thead>
+      <tr>
+        <th>ご身体状況</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= f.collection_check_boxes(:category_ids, Category.all, :id, :name) do |category| %>
+        <tr>
+          <td>
+            <%= category.check_box %>
+            <%= category.text %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= f.submit "変更" %>
 <% end %>

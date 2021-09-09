@@ -32,4 +32,19 @@
     </tr>
   </tbody>
 </table>
+<table class="table table-borderless">
+  <thead>
+    <tr>
+      <th>ご身体状況</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% current_customer.categories.each do |category| %>
+      <tr>
+        <td><%= category.name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
 <%= link_to "ご注文履歴", orders_path %>

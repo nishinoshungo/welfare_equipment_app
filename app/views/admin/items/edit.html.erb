@@ -14,5 +14,9 @@
   <%= f.number_field :stock, min: 1, max: 99 %>
   <label>商品ステータス</label>
   <%= f.radio_button :is_active, "レンタル可" %>レンタル可<%= f.radio_button :is_active, "レンタル不可" %>レンタル不可
+  <%= f.collection_check_boxes(:category_ids, Category.all, :id, :name) do |category| %>
+    <%= category.check_box %>
+    <%= category.text %>
+  <% end %>
   <%= f.submit "変更する" %>
 <% end %>

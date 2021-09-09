@@ -40,12 +40,13 @@
         <td><%= f.label :"パスワード(確認用)" %></td>
         <td><%= f.password_field :password, autocomplete: "new-password" %></td>
       </tr>
-      <tr>
-        <td></td>
-        <td><%= f.submit "新規登録" %></td>
-      </tr>
     </tbody>
   </table>
+  <%= f.collection_check_boxes(:category_ids, Category.all, :id, :name) do |category| %>
+    <%= category.check_box %>
+    <%= category.text %>
+  <% end %>
+  <%= f.submit "新規登録" %>
 <% end %>
 
 <%= render "devise_customers/shared/links" %>
