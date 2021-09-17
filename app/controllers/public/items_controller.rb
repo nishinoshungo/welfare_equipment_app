@@ -1,4 +1,7 @@
 class Public::ItemsController < ApplicationController
+
+  before_action :authenticate_customer!, only: [:recommend]
+
   def index
     if params[:search] == "genre"
       genre = Genre.find(params[:id])
@@ -25,7 +28,7 @@ class Public::ItemsController < ApplicationController
   def show
     @item = Item.find(params[:id])
     @cart_item = CartItem.new
-
+    @review = Review.new
     if @item.is_active == "レンタル不可"
       redirect_to items_path
     end

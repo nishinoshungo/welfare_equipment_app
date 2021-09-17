@@ -11,34 +11,49 @@
 
   <body>
     <header>
-      <div class="container">
+      <div class="container d-flex justify-content-between align-items-center">
         <%= link_to "ふくこれ", root_path, class: "navbar-brand border text-dark p-2" %>
-        <nav>
-          <% if admin_signed_in? %>
-            <li><%= link_to "商品一覧", admin_items_path %></li>
-            <li><%= link_to "顧客一覧", admin_customers_path %></li>
-            <li><%= link_to "ジャンル一覧", admin_genres_path %></li>
-            <li><%= link_to "注文履歴一覧", admin_orders_path %></li>
-            <li><%= link_to "カテゴリ一覧・追加", admin_categories_path %></li>
-            <li><%= link_to "ログアウト", destroy_admin_session_path, method: :delete %></li>
-          <% elsif customer_signed_in? %>
-            <li><%= link_to "マイページ", customers_my_page_path %></li>
-            <li><%= link_to "商品一覧", items_path %></li>
-            <li><%= link_to "お気に入り商品", customers_favorite_items_path %></li>
-            <li><%= link_to "#{current_customer.last_name}様へのオススメ商品", recommend_path %></li>
-            <li><%= link_to "お買い物かご", cart_items_path %></li>
-            <li><%= link_to "ログアウト", destroy_customer_session_path, method: :delete %></li>
-          <% else %>
-            <li><%= link_to "ログイン", new_customer_session_path %></li>
-            <li><%= link_to "新規会員登録", new_customer_registration_path %></li>
+        <div id="sp-menu">
+          <nav>
+            <% if admin_signed_in? %>
+              <li><%= link_to "商品一覧", admin_items_path %></li>
+              <li><%= link_to "顧客一覧", admin_customers_path %></li>
+              <li><%= link_to "ジャンル一覧", admin_genres_path %></li>
+              <li><%= link_to "注文履歴一覧", admin_orders_path %></li>
+              <li><%= link_to "カテゴリ一覧・追加", admin_categories_path %></li>
+              <li><%= link_to "ログアウト", destroy_admin_session_path, method: :delete %></li>
+            <% elsif customer_signed_in? %>
+              <li><%= link_to "マイページ", customers_my_page_path %></li>
+              <li><%= link_to "商品一覧", items_path %></li>
+              <li><%= link_to "お気に入り商品", customers_favorite_items_path %></li>
+              <li><%= link_to "#{current_customer.last_name}様へのオススメ商品", recommend_path %></li>
+              <li><%= link_to "お買い物かご", cart_items_path %></li>
+              <li><%= link_to "ログアウト", destroy_customer_session_path, method: :delete %></li>
+            <% else %>
+              <li><%= link_to "ログイン", new_customer_session_path %></li>
+              <li><%= link_to "新規会員登録", new_customer_registration_path %></li>
+              <li><%= link_to "商品一覧", items_path %></li>
+              <li><%= link_to "about", about_path %></li>
+            <% end %>
+          </nav>
+          <%= form_with url: "/search", method: :get, local:true do |f| %>
+            <%= f.text_field :keyword %>
+            <%= f.submit "商品検索" %>
           <% end %>
-        </nav>
-        <%= form_with url: "/search", method: :get, local:true do |f| %>
-          <%= f.text_field :keyword %>
-          <%= f.submit "商品検索" %>
-        <% end %>
+        </div>
+
+        <div id="hm-icon">
+          <a class="menu-trigger" href="#">
+            <span></span>
+            <span></span>
+            <span></span>
+          </a>
+        </div>
       </div>
     </header>
-    <%= yield %>
+    <div class="main">
+      <%= yield %>
+    </div>
+
   </body>
 </html>

@@ -19,26 +19,85 @@
             <td>月額</td>
             <td><%= @item.price %>円</td>
           </tr>
+          <% if customer_signed_in? %>
+            <tr>
+              <td><%= current_customer.burden_ratio %>額</td>
+              <td><%= (@item.price * current_customer.burden_ratio.to_i * 0.1).floor %>円</td>
+            </tr>
+          <% end %>
           <tr>
-            <td><%= current_customer.burden_ratio %>額</td>
-            <td><%= (@item.price * current_customer.burden_ratio.to_i * 0.1).floor %>円</td>
+            <td>平均点数</td>
+            <td class="review-star" data-score="<%= @item.reviews.average(:rate).to_f.round(1) %>"></td>
           </tr>
         </tbody>
       </table>
+      <% if customer_signed_in? %>
+        <% if current_customer.already_favorited?(@item) %>
+          <%= link_to "お気に入り解除", destroy_favorite_items_path(item_id: @item.id), method: :delete %>
+        <% else %>
+          <%= link_to "お気に入り登録", create_favorite_items_path(item_id: @item.id), method: :post %>
+        <% end %>
+        (<%= @item.favorite_items.count %>人がお気に入りしています。)
 
-      <% if current_customer.already_favorited?(@item) %>
-        <%= link_to "お気に入り解除", destroy_favorite_items_path(item_id: @item.id), method: :delete %>
-      <% else %>
-        <%= link_to "お気に入り登録", create_favorite_items_path(item_id: @item.id), method: :post %>
-      <% end %>
-      (<%= @item.favorite_items.count %>人がお気に入りしています。)
-
-      <%= form_with model: @cart_item, url: '/cart_items', local:true do |f| %>
-        <%= f.number_field :amount, min: 1, max: 10 %>
-        <%= f.hidden_field :item_id, value: @item.id %>
-        <%= f.hidden_field :customer_id, value: current_customer.id %>
-        <%= f.submit "お買い物かごに入れる" %>
+        <%= form_with model: @cart_item, url: '/cart_items', local:true do |f| %>
+          <%= f.number_field :amount, min: 1, max: @item.stock %>
+          <%= f.hidden_field :item_id, value: @item.id %>
+          <%= f.hidden_field :customer_id, value: current_customer.id %>
+          <%= f.submit "お買い物かごに入れる" %>(残り<%= @item.stock %>点)
+        <% end %>
       <% end %>
     </div>
   </div>
+
+  <% if customer_signed_in? %>
+    <div>
+      <h4>レビューを作成</h4>
+        <%= form_with model: @review, url: items_reviews_path(item_id: @item.id), local:true do |f| %>
+          <div class="new_star">
+            <label>評価</label>
+          </div>
+          <%= f.label :コメント %>
+          <%= f.text_area :comment %>
+          <%= f.submit "レビュー投稿" %>
+        <% end %>
+    </div>
+  <% end %>
+  <div>
+    <h4>レビュー一覧</h4>
+      <% @item.reviews.each do |review| %>
+        <div>
+          <%= review.comment %>
+          <div class="review-star" data-score="<%= review.rate %>"></div>
+          <%= review.created_at %>
+
+          <% if customer_signed_in? %>
+            <% if review.customer_id == current_customer.id %>
+              <%= link_to "編集", "/items/reviews/#{review.id}/edit" %>
+              <%= link_to "削除", destroy_review_path(review.id, item_id: @item.id), method: :delete %>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+  </div>
 </div>
+
+<script>
+  $('.new_star').raty({
+    size: 36,
+    starOn: "<%= asset_path('star-on.png') %>",
+    starOff: "<%= asset_path('star-off.png') %>",
+    starHalf: "<%= asset_path('star-half.png') %>",
+    scoreName: 'review[rate]',
+    half: true
+  });
+
+  $('.review-star').raty({
+    readOnly: true,
+    score: function(){
+      return $(this).attr('data-score');
+    },
+    path: '/assets/',
+    size: 36
+  });
+
+</script>

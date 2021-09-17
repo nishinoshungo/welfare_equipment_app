@@ -19,3 +19,30 @@
 //= require activestorage
 //= require turbolinks
 //= require_tree .
+
+//= require jquery.raty.js
+
+/*global $*/
+
+$(document).ready(function(){
+  $("#theTarget").skippr({
+    transition : 'fade',
+    speed : 1000,
+    easing : 'easeOutQuart',
+    navType : 'block',
+    chirdrenElementType : 'div',
+    arrows : true,
+    autoPlay : true,
+    autoPlayDuration : 5000,
+    keyboardOnAlways :true,
+    hidePrevious : false
+  });
+});
+
+$(function() {
+  $('.menu-trigger').on('click', function(event) {
+    $(this).toggleClass('active');
+    $('#sp-menu').fadeToggle();
+    event.preventDefault();
+  });
+});

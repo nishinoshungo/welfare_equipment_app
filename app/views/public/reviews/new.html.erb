@@ -1,0 +1,20 @@
+<h4>レビューを作成</h4>
+<%= form_with model: @review, url: "/items/reviews", local:true do |f| %>
+  <div id="review_star">
+    <label>評価</label>
+  </div>
+  <%= f.label :コメント %>
+  <%= f.text_area :comment %>
+  <%= f.submit "レビュー投稿" %>
+<% end %>
+
+<script>
+  $('#review_star').raty({
+    size: 36,
+    starOn: "<%= asset_path('star-on.png') %>",
+    starOff: "<%= asset_path('star-off.png') %>",
+    starHalf: "<%= asset_path('star-half.png') %>",
+    scoreName: 'review[rate]',
+    half: true
+  });
+</script>

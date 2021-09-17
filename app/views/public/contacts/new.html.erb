@@ -1,0 +1,22 @@
+<%= form_with model: @contact, url: contact_confirm_path, local:true do |f| %>
+  <div class="form-group">
+    <%= f.label :お名前 %>
+    <%= f.text_field :name, autofocus: :true, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :メールアドレス %>
+    <%= f.text_field :email, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :件名 %>
+    <%= f.text_field :subject, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :メッセージ %>
+    <%= f.text_area :message, size: '10x10', class: 'form-control' %>
+  </div>
+
+  <div>
+    <%= f.submit '入力内容確認' %>
+  </div>
+<% end %>

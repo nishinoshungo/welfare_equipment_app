@@ -1,4 +1,7 @@
 class Public::OrdersController < ApplicationController
+
+  before_action :authenticate_customer!
+
   def index
     @orders = current_customer.orders
   end
@@ -22,6 +25,14 @@ class Public::OrdersController < ApplicationController
       order_item.price = cart_item.item.price
       order_item.amount = cart_item.amount
       order_item.save
+
+      #商品を購入した分だけ在庫数を減らす
+      item = Item.find(order_item.item_id)
+      item.stock = item.stock - order_item.amount
+      if item.stock == 0
+        item.is_active = "レンタル不可"
+      end
+      item.save
     end
 
     # 注文確定後、かごの中身を空にし、注文完了画面へ
@@ -33,6 +44,10 @@ class Public::OrdersController < ApplicationController
     @order = Order.new
     @order_item = OrderItem.new
     @cart_items = current_customer.cart_items
+    if @cart_items.blank?
+      flash[:alert] = "カートが空です。"
+      render "public/cart_items/index"
+    end
   end
 
   def complete

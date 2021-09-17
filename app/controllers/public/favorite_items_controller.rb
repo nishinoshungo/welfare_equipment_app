@@ -1,4 +1,7 @@
 class Public::FavoriteItemsController < ApplicationController
+
+  before_action :authenticate_customer!
+
   def index
     @favorite_items = current_customer.favorite_items
   end

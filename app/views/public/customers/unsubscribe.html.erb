@@ -1,2 +1,10 @@
-<h1>Public::Customers#unsubscribe</h1>
-<p>Find me in app/views/public/customers/unsubscribe.html.erb</p>
+<h5>本当に退会しますか？</h5>
+<p>
+  退会すると、会員情報や<br>
+  これまでのレンタル履歴が<br>
+  閲覧できなくなります。
+</p>
+
+<%= link_to "退会しない", customers_my_page_path %>
+<%= link_to "退会する", customers_withdraw_path, method: :patch %>
+

@@ -53,4 +53,15 @@ Rails.application.routes.draw do
   get '/orders/:id', to: 'public/orders#show'
   post '/orders', to: 'public/orders#create'
 
+  get '/items/reviews/new', to: 'public/reviews#new'
+  post '/items/reviews', to: 'public/reviews#create'
+  get '/items/reviews/:id/edit', to: 'public/reviews#edit'
+  patch '/items/reviews/:id', to: 'public/reviews#update'
+  delete '/items/reviews/:id', to: 'public/reviews#destroy', as: :destroy_review
+
+  get '/contacts/new', to: 'public/contacts#new', as: :contact_new
+  post '/contacts/confirm', to: 'public/contacts#confirm', as: :contact_confirm
+  post '/contacts/back', to: 'public/contacts#back', as: :contact_back
+  post '/contacts', to: 'public/contacts#create', as: :contact_create
+  get '/contacts/complete', to: 'public/contacts#complete', as: :contact_complete
 end

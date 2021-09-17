@@ -1,4 +1,7 @@
 class Public::CustomersController < ApplicationController
+
+  before_action :authenticate_customer!
+
   def show
   end
 
@@ -15,6 +18,11 @@ class Public::CustomersController < ApplicationController
   end
 
   def withdraw
+    customer = current_customer
+    customer.is_active = "退会"
+    customer.save
+    reset_session
+    redirect_to root_path
   end
 
   private
