@@ -29,12 +29,14 @@ class Public::ItemsController < ApplicationController
     @item = Item.find(params[:id])
     @cart_item = CartItem.new
     @review = Review.new
+    @genres = Genre.all
     if @item.is_active == "レンタル不可"
       redirect_to items_path
     end
   end
 
   def recommend
+    @genres = Genre.all
   end
 
 end

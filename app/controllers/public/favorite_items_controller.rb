@@ -4,6 +4,7 @@ class Public::FavoriteItemsController < ApplicationController
 
   def index
     @favorite_items = current_customer.favorite_items
+    @genres = Genre.all
   end
 
   def create

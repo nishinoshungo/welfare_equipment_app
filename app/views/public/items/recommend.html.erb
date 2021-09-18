@@ -1,11 +1,35 @@
-<p><%= current_customer.last_name %>様へのオススメ</p>
-<% current_customer.categories.each do |category| %>
-  <p><%= category.name %>方にオススメ</p>
-  <% category.items.each do |item| %>
-    <%= link_to "/item/#{item.id}" do %>
-      <%= attachment_image_tag item, :image, :fill, 100, 100, format: 'jpg' %>
+<div class="row">
+  <%= render 'public/items/genre', genres: @genres %>
+  <div class="col-9">
+    <h4><%= current_customer.last_name %>様へのオススメ</h4>
+    <% if current_customer.categories.count == 0 %>
+      <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
+        <p class="text-center">
+          おすすめ商品がありません。<br>
+          マイページからご身体状況を登録してください。
+        </p>
+      </div>
+    <% else %>
+      <div class="container">
+        <% current_customer.categories.each do |category| %>
+          <div class="row mt-5">
+            <h5>◯<%= category.name %>方にオススメ</h5>
+          </div>
+          <div class="row">
+            <% category.items.each do |item| %>
+              <div class="col-3 mb-5 pt-3 shadow-sm" style="background-color: #FFFFFF;">
+                <div class="d-flex justify-content-center">
+                  <%= link_to "/items/#{item.id}" do %>
+                    <%= attachment_image_tag item, :image, :fill, 150, 140, format: 'jpg' %>
+                  <% end %>
+                </div>
+                <p class="mt-5 text-center"><%= item.name  %></p>
+                <p class="text-center"><%= item.price.to_s(:delimited) %>円</p>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     <% end %>
-    <%= item.name %>
-    <%= item.price %>
-  <% end %>
-<% end %>
+  </div>
+</div>

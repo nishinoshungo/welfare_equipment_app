@@ -1,13 +1,25 @@
-<h4>お気に入り商品一覧</h4>
-<% if @favorite_items.count == 0 %>
-  <p>お気に入りされた商品がありません。</p>
-<% else %>
-  <% @favorite_items.each do |favorite_item| %>
-    <%= link_to "/items/#{favorite_item.item_id}" do %>
-      <%= attachment_image_tag favorite_item.item, :image, :fill, 100, 100, format: 'jpg' %>
+<div class="row">
+  <%= render 'public/items/genre', genres: @genres %>
+  <div class="col-9">
+    <h4>お気に入り商品</h4>
+    <% if @favorite_items.count == 0 %>
+      <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
+        <p>お気に入りされた商品がありません。</p>
+      </div>
+    <% else %>
+      <div class="row mt-5">
+        <% @favorite_items.each do |favorite_item| %>
+          <div class="col-3 mb-5 pt-3 shadow-sm" style="background-color: #FFFFFF;">
+            <div class="d-flex justify-content-center">
+              <%= link_to "/items/#{favorite_item.item_id}" do %>
+                <%= attachment_image_tag favorite_item.item, :image, :fill, 150, 140, format: 'jpg' %>
+              <% end %>
+            </div>
+            <p class="mt-5 text-center"><%= favorite_item.item.name %></p>
+            <p class="text-center"><%= favorite_item.item.price.to_s(:delimited) %>円</p>
+          </div>
+        <% end %>
+      </div>
     <% end %>
-    <%= favorite_item.item.name %>
-    <%= favorite_item.item.price %>円
-  <% end %>
-<% end %>
-
+  </div>
+</div>

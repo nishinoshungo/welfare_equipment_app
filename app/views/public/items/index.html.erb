@@ -1,26 +1,19 @@
-<table>
-  <thead>
-    <tr>
-      <th>ジャンル検索</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @genres.each do |genre| %>
-      <tr>
-        <td>
-          <%= link_to items_path(search: "genre", id: genre.id) do %>
-          <%= genre.name %>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<h4><%= @title %>一覧</h4>
-<% @items.each do |item| %>
-  <%= link_to "/items/#{item.id}" do %>
-    <%= attachment_image_tag item, :image, :fill, 100, 100, format: 'jpg' %>
-  <% end %>
-  <%= item.name  %>
-  <%= item.price %>円
-<% end %>
+<div class="row">
+  <%= render 'public/items/genre', genres: @genres %>
+  <div class="col-9">
+    <h4><%= @title %>一覧</h4>
+    <div class="row mt-5">
+      <% @items.each do |item| %>
+        <div class="col-3 mb-5 pt-3 shadow-sm" style="background-color: #FFFFFF;">
+          <div class="d-flex justify-content-center">
+            <%= link_to "/items/#{item.id}" do %>
+              <%= attachment_image_tag item, :image, :fill, 150, 140, format: 'jpg' %>
+            <% end %>
+          </div>
+          <p class="mt-5 text-center"><%= item.name  %></p>
+          <p class="text-center"><%= item.price.to_s(:delimited) %>円</p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

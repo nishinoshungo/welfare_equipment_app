@@ -4,16 +4,15 @@
     <title>WelfareEquipmentApp</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
   </head>
 
   <body>
     <header>
-      <div class="container d-flex justify-content-between align-items-center">
-        <%= link_to "ふくこれ", root_path, class: "navbar-brand border text-dark p-2" %>
-        <div id="sp-menu">
+      <nav class="d-flex justify-content-between align-items-center px-3 shadow-sm">
+        <%= link_to "福祉用具コレクション", root_path, class: "navbar-brand border text-dark p-2" %>
+        <div id="sp-menu" class="shadow-sm">
           <nav>
             <% if admin_signed_in? %>
               <li><%= link_to "商品一覧", admin_items_path %></li>
@@ -35,13 +34,14 @@
               <li><%= link_to "商品一覧", items_path %></li>
               <li><%= link_to "about", about_path %></li>
             <% end %>
+            <div class="text-center">
+              <%= form_with url: "/search", method: :get, local:true do |f| %>
+                <%= f.text_field :keyword %>
+                <%= f.submit "商品検索", class: "btn btn-primary" %>
+              <% end %>
+            </div>
           </nav>
-          <%= form_with url: "/search", method: :get, local:true do |f| %>
-            <%= f.text_field :keyword %>
-            <%= f.submit "商品検索" %>
-          <% end %>
         </div>
-
         <div id="hm-icon">
           <a class="menu-trigger" href="#">
             <span></span>
@@ -49,11 +49,14 @@
             <span></span>
           </a>
         </div>
-      </div>
+      </nav>
     </header>
-    <div class="main">
+
+    <div class="container-fluid shadow-sm" style="padding-top: 150px; padding-bottom: 50px; background-color: #FAFAFA;">
       <%= yield %>
     </div>
+
+    <footer></footer>
 
   </body>
 </html>
