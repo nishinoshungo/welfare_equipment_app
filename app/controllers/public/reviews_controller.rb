@@ -7,11 +7,17 @@ class Public::ReviewsController < ApplicationController
   end
 
   def create
+    # review = Review.new(review_params)
+    # review.item_id = params[:item_id]
+    # review.customer_id = current_customer.id
+    # review.save
+    # redirect_to "/items/#{params[:item_id]}"
+
     review = Review.new(review_params)
     review.item_id = params[:item_id]
     review.customer_id = current_customer.id
     review.save
-    redirect_to "/items/#{params[:item_id]}"
+    @item = Item.find(params[:item_id])
   end
 
   def edit

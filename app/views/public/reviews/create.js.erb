@@ -1,0 +1,4 @@
+$("textarea").val("");
+$('.new_star').children('img').attr('src', "/assets/star-off-cf9b07584547d5d561dfac9cdbf7b6a530cb72a1b7a1096411966036c4017d38.png");
+$('#exampleModal').modal('hide');
+$('.reviews').html("<%= escape_javascript(render 'public/items/reviews', item: @item) %>");
