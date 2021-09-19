@@ -1,47 +1,63 @@
-<p style="color: red;"><%= flash[:alert] %></p>
-<h1>お買い物かご</h1>
-<%= link_to "かごを空にする", "/cart_items", method: :delete, class: "btn btn-danger" %>
-<table class="table">
-  <thead>
-    <tr>
-      <th>商品名</th>
-      <th>単価</th>
-      <th>数量</th>
-      <th>小計</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% total_price = 0 %>
-    <% @cart_items.each do |cart_item| %>
-      <% subtotal = cart_item.item.price * cart_item.amount %>
+<h4>お買い物カート</h4>
+<% if @cart_items.count == 0 %>
+  <div class="d-flex justify-content-center align-items-center" style="height: 400px;">
+    <h5 class="text-center" style="line-height: 40px;">カートの中身が空です。<br>
+      <%= link_to "買い物を続ける", items_path, class: "btn btn-primary" %>
+    </h5>
+  </div>
+<% else %>
+  <div class="d-flex justify-content-end">
+    <%= link_to "カートを空にする", "/cart_items", method: :delete, class: "btn btn-danger" %>
+  </div>
+  <table class="table mt-2">
+    <thead>
       <tr>
-        <td><%= cart_item.item.name %></td>
-        <td><%= cart_item.item.price %></td>
-        <td>
-          <%= form_with model: cart_item, url: "/cart_items/#{cart_item.id}", local:true do |f| %>
-            <%= f.number_field :amount, min: 1, max: 10 %>
-            <%= f.submit "変更", class: "btn btn-success" %>
-          <% end %>
-        </td>
-        <td><%= subtotal %></td>
-        <td><%= link_to "削除する", "/cart_items/#{cart_item.id}", method: :delete, class: "btn btn-danger" %></td>
+        <th>商品名</th>
+        <th>単価</th>
+        <th>数量</th>
+        <th>小計</th>
+        <th></th>
       </tr>
-      <% total_price = total_price + subtotal %>
-    <% end %>
-  </tbody>
-</table>
-<%= link_to "買い物を続ける", items_path, class: "btn btn-primary" %>
-<table class="table">
-  <tbody>
-    <tr>
-      <td>合計金額</td>
-      <td><%= total_price %></td>
-    </tr>
-    <tr>
-      <td><%= current_customer.burden_ratio %>額</td>
-      <td><%= (total_price * current_customer.burden_ratio.to_i * 0.1).floor %></td>
-    </tr>
-  </tbody>
-</table>
-<%= link_to "確認画面へ進む", orders_confirm_path, class: "btn btn-success" %>
+    </thead>
+    <tbody>
+      <% total_price = 0 %>
+      <% @cart_items.each do |cart_item| %>
+        <% subtotal = cart_item.item.price * cart_item.amount %>
+        <tr>
+          <td><%= cart_item.item.name %></td>
+          <td><%= cart_item.item.price.to_s(:delimited) %></td>
+          <td>
+            <%= form_with model: cart_item, url: "/cart_items/#{cart_item.id}", local:true do |f| %>
+              <%= f.number_field :amount, min: 1, max: 10 %>
+              <%= f.submit "変更", class: "btn btn-success" %>
+            <% end %>
+          </td>
+          <td><%= subtotal.to_s(:delimited) %></td>
+          <td><%= link_to "削除する", "/cart_items/#{cart_item.id}", method: :delete, class: "btn btn-danger" %></td>
+        </tr>
+        <% total_price = total_price + subtotal %>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-between mt-5">
+    <div>
+      <%= link_to "買い物を続ける", items_path, class: "btn btn-primary" %>
+    </div>
+    <table class="table border-bottom" style="width: 40%;">
+      <tbody>
+        <tr>
+          <td>合計金額</td>
+          <td><%= total_price.to_s(:delimited) %></td>
+        </tr>
+        <tr>
+          <td><%= current_customer.burden_ratio %>額</td>
+          <td><%= (total_price * current_customer.burden_ratio.to_i * 0.1).floor.to_s(:delimited) %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="d-flex justify-content-center mt-5">
+    <%= link_to "確認画面へ進む", orders_confirm_path, class: "btn btn-success" %>
+  </div>
+<% end %>

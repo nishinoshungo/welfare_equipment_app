@@ -1,66 +1,80 @@
 <h4>ご注文詳細</h4>
 
-<h6>ご注文情報</h6>
-<table class="table">
-  <thead>
-    <tr>
-      <th>商品名</th>
-      <th>単価</th>
-      <th>数量</th>
-      <th>小計</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% total_price = 0 %>
-    <% @order.order_items.each do |order_item| %>
-      <% subtotal = order_item.item.price * order_item.amount %>
-      <tr>
-        <td><%= order_item.item.name %></td>
-        <td><%= order_item.item.price %></td>
-        <td><%= order_item.amount %></td>
-        <td><%= subtotal %></td>
-      </tr>
-      <% total_price = total_price + subtotal %>
-    <% end %>
-  </tbody>
-</table>
+<div class="row mt-5">
+  <div class="col-8">
+    <table class="table mb-5">
+      <thead>
+        <tr>
+          <th>商品名</th>
+          <th>単価</th>
+          <th>数量</th>
+          <th>小計</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% total_price = 0 %>
+        <% @order.order_items.each do |order_item| %>
+          <% subtotal = order_item.item.price * order_item.amount %>
+          <tr>
+            <td>
+              <%= link_to admin_item_path(order_item.item_id) do %>
+                <%= order_item.item.name %>
+              <% end %>
+            </td>
+            <td><%= order_item.item.price.to_s(:delimited) %></td>
+            <td><%= order_item.amount %></td>
+            <td><%= subtotal.to_s(:delimited) %></td>
+          </tr>
+          <% total_price = total_price + subtotal %>
+        <% end %>
+      </tbody>
+    </table>
 
-<h6>ご請求情報</h6>
-<table class="table">
-  <tbody>
-    <tr>
-      <td>合計金額</td>
-      <td><%= total_price %></td>
-    </tr>
-    <tr>
-      <td><%= @order.customer.burden_ratio %>額</td>
-      <td><%= (total_price * @order.customer.burden_ratio.to_i * 0.1).floor %></td>
-    </tr>
-  </tbody>
-</table>
+    <h6>ご注文者情報</h6>
+    <table class="table">
+      <tbody>
+        <tr>
+          <td>ご注文者名</td>
+          <td>
+            <%= link_to admin_customer_path(@order.customer_id) do %>
+              <%= @order.customer.last_name %> <%= @order.customer.first_name %>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>住所</td>
+          <td><%= @order.customer.address %></td>
+        </tr>
+        <tr>
+          <td>電話番号</td>
+          <td><%= @order.customer.telephone_number %></td>
+        </tr>
+        <tr>
+          <td>メールアドレス</td>
+          <td><%= @order.customer.email %></td>
+        </tr>
+        <tr>
+          <td>介護保険負担割合</td>
+          <td><%= @order.customer.burden_ratio %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-<h6>ご注文者情報</h6>
-<table class="table">
-  <tbody>
-    <tr>
-      <td>ご注文者名</td>
-      <td><%= @order.customer.last_name %> <%= @order.customer.first_name %></td>
-    </tr>
-    <tr>
-      <td>住所</td>
-      <td><%= @order.customer.address %></td>
-    </tr>
-    <tr>
-      <td>電話番号</td>
-      <td><%= @order.customer.telephone_number %></td>
-    </tr>
-    <tr>
-      <td>メールアドレス</td>
-      <td><%= @order.customer.email %></td>
-    </tr>
-    <tr>
-      <td>介護保険負担割合</td>
-      <td><%= @order.customer.burden_ratio %></td>
-    </tr>
-  </tbody>
-</table>
+  <div class="col-4 pl-5">
+    <table class="table">
+      <tbody>
+        <tr>
+          <td>合計金額</td>
+          <td><%= total_price.to_s(:delimited) %></td>
+        </tr>
+        <tr>
+          <td><%= @order.customer.burden_ratio %>額</td>
+          <td><%= (total_price * @order.customer.burden_ratio.to_i * 0.1).floor.to_s(:delimited) %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+

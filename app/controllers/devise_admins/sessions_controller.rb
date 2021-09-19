@@ -18,6 +18,14 @@ class DeviseAdmins::SessionsController < Devise::SessionsController
   #   super
   # end
 
+  def after_sign_in_path_for(resource)
+    admin_menu_path(resource)
+  end
+
+  def after_sign_out_path_for(resource)
+    admin_path(resource)
+  end
+
   # protected
 
   # If you have extra params to permit, append them to the sanitizer.

@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     resources :customers, only: [:index, :show, :edit, :update]
     resources :orders, only: [:index, :show]
     resources :categories, only: [:index, :create, :edit, :update, :destroy]
+    get '/', to: "homes#top"
+    get '/menu', to: "homes#menu"
   end
   devise_for :admin, controllers: {
     sessions: 'devise_admins/sessions',

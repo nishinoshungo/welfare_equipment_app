@@ -3,7 +3,18 @@ class Admin::ItemsController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-    @items = Item.all
+    if params[:genre_id].present? #パラメーターに:genre_idがある時、ジャンルに紐付いた商品を表示
+      genre = Genre.find(params[:genre_id])
+      @items = genre.items
+      @title = "#{genre.name}一覧"
+    elsif params[:category_id].present? #パラメーターに:category_idがある時、カテゴリに紐付いた商品を表示  
+      category = Category.find(params[:category_id])
+      @items = category.items
+      @title = "#{category.name}方向けの商品"
+    else #上記条件に当てはまらない場合は全商品を表示する
+      @items = Item.all
+      @title ="商品一覧"
+    end
   end
 
   def new

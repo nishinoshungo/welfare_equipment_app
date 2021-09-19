@@ -1,13 +1,18 @@
-<h4>レビュー編集</h4>
 
+<h5 class="mb-5">レビュー編集</h5>
 <%= form_with model: @review, url: "/items/reviews/#{@review.id}", local:true do |f| %>
   <div class="new_star">
     <label>評価</label>
   </div>
-  <%= f.label :コメント %>
-  <%= f.text_area :comment %>
-  <%= f.submit "変更" %>
+  <div class="mt-3">
+    <%= f.label :コメント %>
+    <%= f.text_area :comment, class: "form-control" %>
+  </div>
+  <div class="text-center">
+    <%= f.submit "変更する", class: "btn btn-primary mt-5" %>
+  </div>
 <% end %>
+
 
 <script>
   $('.new_star').raty({

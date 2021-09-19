@@ -1,38 +1,43 @@
-<h1>マイページ</h1>
-<%= link_to "編集する", customers_edit_path %>
-<table class="table">
-  <tbody>
-    <tr>
-      <td>氏名</td>
-      <td><%= current_customer.last_name %> <%= current_customer.first_name %></td>
-    </tr>
-    <tr>
-      <td>カナ</td>
-      <td><%= current_customer.last_name_kana %> <%= current_customer.first_name_kana %></td>
-    </tr>
-    <tr>
-      <td>郵便番号</td>
-      <td><%= current_customer.postal_code %></td>
-    </tr>
-    <tr>
-      <td>住所</td>
-      <td><%= current_customer.address %></td>
-    </tr>
-    <tr>
-      <td>電話番号</td>
-      <td><%= current_customer.telephone_number %></td>
-    </tr>
-    <tr>
-      <td>メールアドレス</td>
-      <td><%= current_customer.email %></td>
-    </tr>
-    <tr>
-      <td>介護保険負担割合</td>
-      <td><%= current_customer.burden_ratio %></td>
-    </tr>
-  </tbody>
-</table>
-<table class="table table-borderless">
+<h4>マイページ</h4>
+<diV>
+  <div class="d-flex justify-content-end">
+    <%= link_to "編集する", customers_edit_path, class: "btn btn-success" %>
+  </div>
+  <table class="table mt-3">
+    <tbody>
+      <tr>
+        <td>氏名</td>
+        <td><%= current_customer.last_name %> <%= current_customer.first_name %></td>
+      </tr>
+      <tr>
+        <td>カナ</td>
+        <td><%= current_customer.last_name_kana %> <%= current_customer.first_name_kana %></td>
+      </tr>
+      <tr>
+        <td>郵便番号</td>
+        <td><%= current_customer.postal_code %></td>
+      </tr>
+      <tr>
+        <td>住所</td>
+        <td><%= current_customer.address %></td>
+      </tr>
+      <tr>
+        <td>電話番号</td>
+        <td><%= current_customer.telephone_number %></td>
+      </tr>
+      <tr>
+        <td>メールアドレス</td>
+        <td><%= current_customer.email %></td>
+      </tr>
+      <tr>
+        <td>介護保険負担割合</td>
+        <td><%= current_customer.burden_ratio %></td>
+      </tr>
+    </tbody>
+  </table>
+</diV>
+
+<table class="table table-borderless mt-5 mb-5">
   <thead>
     <tr>
       <th>ご身体状況</th>
@@ -41,11 +46,11 @@
   <tbody>
     <% current_customer.categories.each do |category| %>
       <tr>
-        <td><%= category.name %></td>
+        <td>◯<%= category.name %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<%= link_to "ご注文履歴", orders_path %>
-<%= link_to "退会する", customers_unsubscribe_path %>
+<%= link_to "ご注文履歴", orders_path, class: "btn btn-primary" %>
+<%= link_to "退会する", customers_unsubscribe_path, class: "btn btn-danger ml-3" %>

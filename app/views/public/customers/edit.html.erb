@@ -1,4 +1,4 @@
-<h1>会員情報編集</h1>
+<h4>会員情報編集</h4>
 <%= form_with model: current_customer, url: '/customers', local:true do |f| %>
   <table class="table table-borderless">
     <tbody>
@@ -32,7 +32,7 @@
       </tr>
     </tbody>
   </table>
-  <table class="table table-borderless">
+  <table class="table table-borderless mt-5">
     <thead>
       <tr>
         <th>ご身体状況</th>
@@ -49,5 +49,7 @@
       <% end %>
     </tbody>
   </table>
-  <%= f.submit "変更" %>
+  <div class="d-flex justify-content-center mt-5">
+    <%= f.submit "変更する", class: "btn btn-success" %>
+  </div>
 <% end %>

@@ -1,0 +1,9 @@
+<h4>管理者メニュー</h4>
+<div class="mx-auto col-6">
+  <%= link_to "商品一覧", admin_items_path, class: "btn btn-lg btn-outline-primary py-3 mt-5", style: "width: 100%;" %>
+  <%= link_to "顧客一覧", admin_customers_path, class: "btn btn-lg btn-outline-secondary py-3 mt-5", style: "width: 100%;" %>
+  <%= link_to "ジャンル一覧・追加", admin_genres_path, class: "btn btn-lg btn-outline-success py-3 mt-5", style: "width: 100%;" %>
+  <%= link_to "注文履歴一覧", admin_orders_path, class: "btn btn-lg btn-outline-warning py-3 mt-5", style: "width: 100%;" %>
+  <%= link_to "カテゴリ一覧・追加", admin_categories_path, class: "btn btn-lg btn-outline-info py-3 mt-5", style: "width: 100%;" %>
+  <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "btn btn-lg btn-outline-danger py-3 mt-5", style: "width: 100%;" %>
+</div>

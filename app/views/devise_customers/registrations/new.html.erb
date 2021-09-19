@@ -1,8 +1,7 @@
-<h1>新規会員登録</h1>
+<h4>新規会員登録</h4>
 <%= form_with model: @customer, url: '/customers', id: 'new_customer', class: 'new_customer', local:true do |f| %>
   <%= render "devise_customers/shared/error_messages", resource: resource %>
-
-  <table>
+  <table class="table table-borderless mt-5">
     <tbody>
       <tr>
         <td><%= f.label :名前 %></td>
@@ -42,11 +41,20 @@
       </tr>
     </tbody>
   </table>
-  <%= f.collection_check_boxes(:category_ids, Category.all, :id, :name) do |category| %>
-    <%= category.check_box %>
-    <%= category.text %>
-  <% end %>
-  <%= f.submit "新規登録" %>
+  <div class="mt-5">
+    <h5 class="mb-3">ご身体状況チェック</h5>
+    <%= f.collection_check_boxes(:category_ids, Category.all, :id, :name) do |category| %>
+      <p>
+        <%= category.check_box %>
+        <%= category.text %>
+      </p>
+    <% end %>
+  </div>
+  <div class="text-center mt-5">
+    <%= f.submit "新規登録", class: "btn btn-success" %>
+  </div>
 <% end %>
+<p>
+  既に会員登録済みの方は<%= link_to "こちら", new_customer_session_path %>
+</p>
 
-<%= render "devise_customers/shared/links" %>

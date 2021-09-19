@@ -1,6 +1,16 @@
-<h1>ご注文ありがとうございました！</h1>
-<p>
-  3営業日以内に弊社スタッフよりメールをお送りいたします。<br>
-  しばらくお待ちくださいませ。
-</p>
+<div class="d-flex justify-content-center align-items-center" style="height: 400px">
+  <div>
+    <h1 class="text-center">ご注文ありがとうございました！</h1>
+    <p class="text-center mt-5">
+      3営業日以内に弊社スタッフよりメールをお送りいたします。<br>
+      しばらくお待ちくださいませ。
+    </p>
+    <div class="d-flex justify-content-center mt-5">
+      <div><%= link_to "ご注文履歴一覧", orders_path, class: "btn btn-primary mr-5" %></div>
+      <div><%= link_to "商品一覧", items_path, class: "btn btn-success" %></div>
+    </div>
+
+  </div>
+
+</div>
 

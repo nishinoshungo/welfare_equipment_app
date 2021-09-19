@@ -1,14 +1,24 @@
 class Public::CartItemsController < ApplicationController
-  
-  
+
+
 
   def index
     @cart_items = current_customer.cart_items
   end
 
   def create
-    cart_item = CartItem.new(cart_item_params)
-    cart_item.save
+    @cart_item = CartItem.new(cart_item_params)
+    # binding.pry
+    if @cart_item.amount == nil
+      @cart_item = CartItem.new
+      @review = Review.new
+      @genres = Genre.all
+      @item = Item.find(params[:cart_item][:item_id])
+      flash[:alert] = "数量を指定してください。"
+      render "public/items/show"
+      return
+    end
+    @cart_item.save
     redirect_to cart_items_path
   end
 
