@@ -1,0 +1,16 @@
+<p>
+  <a class="d-lg-none" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    <i class="fas fa-chevron-circle-down" style="font-size: 50px;"></i>
+  </a>
+</p>
+<div class="collapse" id="collapseExample">
+  <ul class="list-group">
+    <% genres.each do |genre| %>
+        <li style="list-style: none;">
+          <%= link_to items_path(search: "genre", id: genre.id), class: "list-group-item list-group-item-action" do %>
+            <%= genre.name %>
+          <% end %>
+        </li>
+    <% end %>
+  </ul>
+</div>

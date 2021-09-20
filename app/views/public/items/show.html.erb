@@ -1,12 +1,15 @@
+<%= render 'public/items/genre_collapse', genres: @genres %>
 <div class="row">
-  <%= render 'public/items/genre', genres: @genres %>
-  <div class="col-9 pt-5" style="background-color: #FAFAFA;">
-    <div class="row  border-bottom" style="padding-bottom: 100px;">
-      <div class="col d-flex justify-content-center">
-        <%= attachment_image_tag @item, :image, :fill, 250, 250, format: 'jpg' %>
+  <div class="col-lg-3 d-none d-lg-block">
+    <%= render 'public/items/genre', genres: @genres %>
+  </div>
+  <div class="col-lg-9 pt-5" style="background-color: #FAFAFA;">
+    <div class="row border-bottom" style="padding-bottom: 100px;">
+      <div class="col-lg-6 d-flex justify-content-center mb-5 mb-lg-0">
+        <%= attachment_image_tag @item, :image, :fill, 390, 390, format: 'jpg' %>
       </div>
-      <div class="col">
-        <table class="table table-borderless">
+      <div class="col-lg-6 d-flex justify-content-center">
+        <table class="table table-borderless col-7">
           <tbody>
             <tr>
               <td><h4><%= @item.name %></h4></td>
@@ -23,17 +26,14 @@
               <td><%= @item.introduction %></td>
             </tr>
             <tr>
-              <td class="review-star" data-score="<%= @item.reviews.average(:rate).to_f.round(1) %>"></td>
+              <td class="average-star" data-score="<%= @item.reviews.average(:rate).to_f.round(1) %>"></td>
             </tr>
             <tr>
               <td>
                 <% if customer_signed_in? %>
-                  <% if current_customer.already_favorited?(@item) %>
-                    <%= link_to "お気に入り解除", destroy_favorite_items_path(@item, item_id: @item.id), method: :delete %>
-                  <% else %>
-                    <%= link_to "お気に入り登録", create_favorite_items_path(item_id: @item.id), method: :post %>
-                  <% end %>
-                  (<%= @item.favorite_items.count %>人がお気に入りしています。)
+                  <div class="likes">
+                    <%= render 'public/items/favorite', item: @item %>
+                  </div>
                 <% end %>
               </td>
             </tr>
@@ -100,6 +100,15 @@
 
 
 <script>
+  $('.average-star').raty({
+      readOnly: true,
+      score: function(){
+        return $(this).attr('data-score');
+      },
+      path: '/assets/',
+      size: 36
+    });
+
   $('.new_star').raty({
     size: 36,
     starOn: "<%= asset_path('star-on.png') %>",
@@ -108,14 +117,4 @@
     scoreName: 'review[rate]',
     half: true
   });
-
-  $('.review-star').raty({
-    readOnly: true,
-    score: function(){
-      return $(this).attr('data-score');
-    },
-    path: '/assets/',
-    size: 36
-  });
-
 </script>

@@ -28,7 +28,7 @@
           <td><%= cart_item.item.price.to_s(:delimited) %></td>
           <td>
             <%= form_with model: cart_item, url: "/cart_items/#{cart_item.id}", local:true do |f| %>
-              <%= f.number_field :amount, min: 1, max: 10 %>
+              <%= f.number_field :amount, min: 1, max: cart_item.item.stock %>
               <%= f.submit "変更", class: "btn btn-success" %>
             <% end %>
           </td>

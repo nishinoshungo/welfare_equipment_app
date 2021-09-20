@@ -33,7 +33,8 @@ class Public::ReviewsController < ApplicationController
   def destroy
     review = Review.find(params[:id])
     review.destroy
-    redirect_to "/items/#{params[:item_id]}"
+    @item = review.item
+    # redirect_to "/items/#{params[:item_id]}"
   end
 
   private

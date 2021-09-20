@@ -1,6 +1,9 @@
+<%= render 'public/items/genre_collapse', genres: @genres %>
 <div class="row">
-  <%= render 'public/items/genre', genres: @genres %>
-  <div class="col-9">
+  <div class="col-lg-3 d-none d-lg-block">
+    <%= render 'public/items/genre', genres: @genres %>
+  </div>
+  <div class="col-lg-9 mt-5 mt-lg-0">
     <h4>お気に入り商品</h4>
     <% if @favorite_items.count == 0 %>
       <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
@@ -9,7 +12,7 @@
     <% else %>
       <div class="row mt-5">
         <% @favorite_items.each do |favorite_item| %>
-          <div class="col-3 mb-5 pt-3 shadow-sm" style="background-color: #FFFFFF;">
+          <div class="col-lg-3 col-md-4 col-sm-6 mb-5 pt-3 shadow-sm" style="background-color: #FFFFFF;">
             <div class="d-flex justify-content-center">
               <%= link_to "/items/#{favorite_item.item_id}" do %>
                 <%= attachment_image_tag favorite_item.item, :image, :fill, 150, 140, format: 'jpg' %>

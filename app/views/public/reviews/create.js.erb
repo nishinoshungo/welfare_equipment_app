@@ -1,4 +1,13 @@
+<!--投稿完了後の動作-->
+
+<!--textareaの中身を空にする-->
 $("textarea").val("");
+
+<!--星の画像を全てstar-offに変更-->
 $('.new_star').children('img').attr('src', "/assets/star-off-cf9b07584547d5d561dfac9cdbf7b6a530cb72a1b7a1096411966036c4017d38.png");
+
+<!--modalを閉じる-->
 $('#exampleModal').modal('hide');
+
+<!--レビュー一覧の部分テンプレートを再読込する-->
 $('.reviews').html("<%= escape_javascript(render 'public/items/reviews', item: @item) %>");

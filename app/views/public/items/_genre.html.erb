@@ -1,24 +1,13 @@
-<div class="col-3">
-    <div class="row d-flex justify-content-center">
-      <div class="col-11">
-        <table class="table table-borderless shadow-sm"  style="background-color: #FAFAFA;">
-          <thead>
-            <tr>
-              <th>ジャンル検索</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% genres.each do |genre| %>
-              <tr>
-                <td class="genre-name">
-                  <%= link_to items_path(search: "genre", id: genre.id) do %>
-                    <%= genre.name %>
-                  <% end %>
-                </td>
-              </tr>
+<div class="row d-flex justify-content-center">
+  <div class="col-11">
+    <ul class="list-group">
+      <% genres.each do |genre| %>
+          <li style="list-style: none;">
+            <%= link_to items_path(search: "genre", id: genre.id), class: "list-group-item list-group-item-action" do %>
+              <%= genre.name %>
             <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
+          </li>
+      <% end %>
+    </ul>
   </div>
+</div>

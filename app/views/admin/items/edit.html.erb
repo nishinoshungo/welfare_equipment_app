@@ -43,7 +43,7 @@
   </table>
 
   <div class="mt-5">
-    <h5 class="mb-3">ご身体状況チェック</h5>
+    <h5 class="mb-3">カテゴリ登録</h5>
     <%= f.collection_check_boxes(:category_ids, Category.all, :id, :name) do |category| %>
       <p>
         <%= category.check_box %>

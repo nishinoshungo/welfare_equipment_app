@@ -1,0 +1,10 @@
+<% if current_customer.already_favorited?(item) %>
+  <%= link_to destroy_favorite_items_path(item, item_id: item.id), method: :delete, remote: true, style: "text-decoration: none;" do %>
+    <span style="font-size: 30px; color: #FF3300;">♥</span>
+  <% end %>
+<% else %>
+  <%= link_to create_favorite_items_path(item_id: item.id), method: :post, remote: true, style: "text-decoration: none;" do %>
+    <span style="font-size: 30px; color: #BBBBBB;">♡</span>
+  <% end %>
+<% end %>
+(<%= item.favorite_items.count %>人がお気に入り)

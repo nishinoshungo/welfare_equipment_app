@@ -22,41 +22,52 @@
             <% end %>
           <% end %>
         </div>
-        <div class="col-8 d-flex justify-content-between">
-          <% if admin_signed_in? %>
-            <%= link_to "商品一覧", admin_items_path, class: "btn btn-outline-secondary btn-sm" %>
-            <%= link_to "顧客一覧", admin_customers_path, class: "btn btn-outline-secondary btn-sm" %>
-            <%= link_to "注文履歴一覧", admin_orders_path, class: "btn btn-outline-secondary btn-sm" %>
-            <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "btn btn-outline-secondary btn-sm" %>
-          <% elsif customer_signed_in? %>
-            <%= link_to customers_my_page_path, class: "btn btn-outline-primary btn-sm" do %>
-              <i class="fas fa-user"></i> マイページ
+        <% if customer_signed_in? %>
+          <p class="d-none d-lg-block">ようこそ、<%= current_customer.last_name %>さん！</p>
+        <% end %>
+        <div class="col-7 d-flex justify-content-end align-items-center">
+          <div class="d-none d-lg-block">
+            <% if admin_signed_in? %>
+              <%= link_to "商品一覧", admin_items_path, class: "btn btn-outline-secondary btn-sm" %>
+              <%= link_to "顧客一覧", admin_customers_path, class: "btn btn-outline-secondary btn-sm" %>
+              <%= link_to "注文履歴一覧", admin_orders_path, class: "btn btn-outline-secondary btn-sm" %>
+              <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "btn btn-outline-secondary btn-sm" %>
+            <% elsif customer_signed_in? %>
+              <%= link_to customers_my_page_path, class: "btn btn-outline-primary btn-sm" do %>
+                <i class="fas fa-user"></i> マイページ
+              <% end %>
+              <%= link_to customers_favorite_items_path, class: "btn btn-outline-primary btn-sm" do %>
+                <i class="fas fa-heart"></i> お気に入り
+              <% end %>
+              <%= link_to cart_items_path, class: "btn btn-outline-primary btn-sm" do%>
+                <i class="fas fa-shopping-cart"></i> カート
+              <% end %>
+              <%= link_to destroy_customer_session_path, method: :delete, class: "btn btn-outline-primary btn-sm" do %>
+                <i class="fas fa-sign-out-alt"></i> ログアウト
+              <% end %>
+            <% else %>
+              <%= link_to new_customer_session_path, class: "btn btn-outline-primary btn-sm" do %>
+                <i class="fas fa-sign-in-alt"></i> ログイン
+              <% end %>
+              <%= link_to new_customer_registration_path, class: "btn btn-outline-primary btn-sm" do %>
+                <i class="fas fa-user-plus"></i> 会員登録
+              <% end %>
+              <%= link_to items_path, class: "btn btn-outline-primary btn-sm" do %>
+                <i class="fas fa-wheelchair"></i> 商品一覧
+              <% end %>
+              <%= link_to about_path, class: "btn btn-outline-primary btn-sm" do %>
+                <i class="fas fa-book-open"></i> about
+              <% end %>
             <% end %>
-            <%= link_to customers_favorite_items_path, class: "btn btn-outline-primary btn-sm" do %>
-              <i class="fas fa-heart"></i> お気に入り
-            <% end %>
-            <%= link_to cart_items_path, class: "btn btn-outline-primary btn-sm" do%>
-              <i class="fas fa-shopping-cart"></i> カート
-            <% end %>
-            <%= link_to destroy_customer_session_path, method: :delete, class: "btn btn-outline-primary btn-sm" do %>
-              <i class="fas fa-sign-out-alt"></i> ログアウト
-            <% end %>
-          <% else %>
-            <%= link_to new_customer_session_path, class: "btn btn-outline-primary btn-sm" do %>
-              <i class="fas fa-sign-in-alt"></i> ログイン
-            <% end %>
-            <%= link_to new_customer_registration_path, class: "btn btn-outline-primary btn-sm" do %>
-              <i class="fas fa-user-plus"></i> 会員登録
-            <% end %>
-            <%= link_to items_path, class: "btn btn-outline-primary btn-sm" do %>
-              <i class="fas fa-wheelchair"></i> 商品一覧
-            <% end %>
-            <%= link_to about_path, class: "btn btn-outline-primary btn-sm" do %>
-              <i class="fas fa-book-open"></i> about
-            <% end %>
-          <% end %>
+            <div class="mt-2 d-flex justify-content-end form-inline">
+              <%= form_with url: "/search", method: :get, local:true do |f| %>
+                <%= f.text_field :keyword, class: "form-control" %>
+                <%= f.submit "商品検索", class: "btn btn-outline-success" %>
+              <% end %>
+            </div>
+          </div>
 
-          <div id="hm-icon">
+          <div id="hm-icon" class="ml-5">
             <a class="menu-trigger" href="#">
               <span></span>
               <span></span>
@@ -64,12 +75,10 @@
             </a>
           </div>
         </div>
-
-
-
-
-
         <div id="sp-menu" class="shadow-sm">
+          <% if customer_signed_in? %>
+            <h5 class="ml-5" style="margin-top: 100px;">ようこそ、<%= current_customer.last_name %>さん！</h5>
+          <% end %>
           <nav>
             <% if admin_signed_in? %>
               <li class="border-top pt-3"><%= link_to "商品一覧", admin_items_path %></li>
@@ -84,6 +93,7 @@
               <li><%= link_to "お気に入り商品", customers_favorite_items_path %></li>
               <li><%= link_to "#{current_customer.last_name}様へのオススメ商品", recommend_path %></li>
               <li><%= link_to "お買い物カート", cart_items_path %></li>
+              <li><%= link_to "about", about_path %></li>
               <li><%= link_to "ログアウト", destroy_customer_session_path, method: :delete %></li>
             <% else %>
               <li class="border-top pt-3"><%= link_to "ログイン", new_customer_session_path %></li>
@@ -91,55 +101,16 @@
               <li><%= link_to "商品一覧", items_path %></li>
               <li><%= link_to "about", about_path %></li>
             <% end %>
-            <div class="text-center border-top pt-3" style="height: 100%;">
-              <%= form_with url: "/search", method: :get, local:true do |f| %>
-                <%= f.text_field :keyword %>
-                <%= f.submit "商品検索", class: "btn btn-primary" %>
+            <div class="d-flex justify-content-center border-top pt-3 " style="height: 100%;">
+              <%= form_with url: "/search", method: :get, class: "form-inline", local:true do |f| %>
+                <%= f.text_field :keyword, class: "form-control" %>
+                <%= f.submit "商品検索", class: "btn btn-outline-success ml-2" %>
               <% end %>
             </div>
           </nav>
         </div>
-
       </nav>
     </header>
-
-
-    <!--<header>-->
-    <!--  <header class="shadow-sm">-->
-    <!--    <nav class="navbar navbar-expand-lg navbar-light">-->
-    <!--      <div class="container">-->
-    <!--        <a class="navbar-brand p-3" href="/">abc</a>-->
-    <!--        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">-->
-    <!--          <span class="navbar-toggler-icon"></span>-->
-    <!--        </button>-->
-    <!--        <div class="navbar-collapse" id="navbarNavDropdown">-->
-    <!--          <ul class="navbar-nav ml-auto">-->
-
-    <!--          <li class="nav-item">-->
-    <!--            <p class="nav-link">餃子</p>-->
-    <!--          </li>-->
-    <!--          <li class="nav-item">-->
-    <!--            <p class="nav-link">餃子</p>-->
-    <!--          </li>-->
-    <!--          <li class="nav-item">-->
-    <!--            <p class="nav-link">餃子</p>-->
-    <!--          </li>-->
-
-    <!--          <li class="nav-item">-->
-    <!--            <p class="nav-link">餃子</p>-->
-    <!--          </li>-->
-    <!--          <li class="nav-item">-->
-    <!--            <p class="nav-link">餃子</p>-->
-    <!--          </li>-->
-
-    <!--          </ul>-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--    </nav>-->
-    <!--</header>-->
-
-
-
 
     <div class="container-fluid shadow-sm" style="padding-top: 150px; padding-bottom: 50px; background-color: #F8F8F6;">
       <div class="container-fluid shadow-sm p-5", style="background-color: #FAFAFA;">

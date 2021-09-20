@@ -12,12 +12,14 @@ class Public::FavoriteItemsController < ApplicationController
     favorite_item.customer_id = current_customer.id
     favorite_item.item_id = params[:item_id]
     favorite_item.save
-    redirect_to "/items/#{params[:item_id]}"
+    @item = favorite_item.item
+    # redirect_to "/items/#{params[:item_id]}"
   end
 
   def destroy
     favorite_item = FavoriteItem.find_by(item_id: params[:item_id])
     favorite_item.destroy
-    redirect_to "/items/#{params[:item_id]}"
+    @item = favorite_item.item
+    # redirect_to "/items/#{params[:item_id]}"
   end
 end
