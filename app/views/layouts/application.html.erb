@@ -118,7 +118,9 @@
       </div>
     </div>
 
-    <%= link_to "お問い合わせ", contact_new_path, class: "btn btn-outline-secondary btn-sm contact-btn" %>
+    <%= link_to contact_new_path, class: "btn btn-outline-secondary btn-sm contact-btn" do %>
+      <i class="far fa-envelope"></i> お問い合わせ
+    <% end %>
 
     <footer></footer>
 

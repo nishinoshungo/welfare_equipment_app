@@ -15,11 +15,11 @@
               <td><h4><%= @item.name %></h4></td>
             </tr>
             <tr>
-              <td><%= @item.price.to_s(:delimited) %>円(税込み)</td>
+              <td><%= @item.price.to_s(:delimited) %>円 (月額)</td>
             </tr>
             <% if customer_signed_in? %>
               <tr>
-                <td><%= (@item.price * current_customer.burden_ratio.to_i * 0.1).floor.to_s(:delimited) %>円(<%= current_customer.burden_ratio %>額)</td>
+                <td><%= (@item.price * current_customer.burden_ratio.to_i * 0.1).floor.to_s(:delimited) %>円 (<%= current_customer.burden_ratio %>額)</td>
               </tr>
             <% end %>
             <tr>
