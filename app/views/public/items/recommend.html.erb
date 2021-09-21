@@ -14,23 +14,26 @@
         </p>
       </div>
     <% else %>
-      <div class="container ">
+      <div class="container">
         <% current_customer.categories.each do |category| %>
           <div class="row mt-5 mb-3">
             <h5>◯ <%= category.name %>方にオススメ</h5>
           </div>
-          <div class="row border-bottom">
-            <% category.items.each do |item| %>
+          <div class="row">
+            <% category.items.limit(4).each do |item| %>
               <div class="col-lg-3 col-md-4 col-sm-6 mb-5 pt-3 shadow-sm" style="background-color: #FFFFFF;">
                 <div class="d-flex justify-content-center">
                   <%= link_to "/items/#{item.id}" do %>
                     <%= attachment_image_tag item, :image, :fill, 150, 140, format: 'jpg' %>
                   <% end %>
                 </div>
-                <p class="mt-5 text-center"><%= item.name  %></p>
+                <p class="mt-5 text-center"><%= item.name %></p>
                 <p class="text-center"><%= item.price.to_s(:delimited) %>円</p>
               </div>
             <% end %>
+          </div>
+          <div class="text-right">
+            <%= link_to "オススメ商品をもっと見る >", items_path(category_id: category.id) %>
           </div>
         <% end %>
       </div>

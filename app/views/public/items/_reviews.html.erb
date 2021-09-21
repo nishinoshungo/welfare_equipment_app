@@ -1,16 +1,16 @@
 <table class="table mt-5">
   <thead>
     <tr>
-      <th>商品レビュー</th>
+      <th>商品レビュー(<%= item.reviews.count %>件)</th>
     </tr>
   </thead>
   <tbody>
-  <% if item.reviews.blank? %>
+  <% if reviews.blank? %>
     <tr>
       <td><p>レビューがありません</p></td>
     </tr>
   <% end %>
-    <% item.reviews.each do |review| %>
+    <% reviews.each do |review| %>
       <tr>
         <td>
           <div class="review-star" data-score="<%= review.rate %>"></div>

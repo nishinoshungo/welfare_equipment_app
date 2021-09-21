@@ -10,4 +10,4 @@ $('.new_star').children('img').attr('src', "/assets/star-off-cf9b07584547d5d561d
 $('#exampleModal').modal('hide');
 
 <!--レビュー一覧の部分テンプレートを再読込する-->
-$('.reviews').html("<%= escape_javascript(render 'public/items/reviews', item: @item) %>");
+$('.reviews').html("<%= escape_javascript(render 'public/items/reviews', item: @item, reviews: @reviews) %>");

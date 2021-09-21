@@ -18,6 +18,7 @@ class Public::ReviewsController < ApplicationController
     review.customer_id = current_customer.id
     review.save
     @item = Item.find(params[:item_id])
+    @reviews = @item.reviews.page(params[:page]).per(5).reverse_order
   end
 
   def edit
@@ -34,6 +35,7 @@ class Public::ReviewsController < ApplicationController
     review = Review.find(params[:id])
     review.destroy
     @item = review.item
+    @reviews = @item.reviews.page(params[:page]).per(5).reverse_order
     # redirect_to "/items/#{params[:item_id]}"
   end
 
