@@ -1,5 +1,4 @@
 class Public::FavoriteItemsController < ApplicationController
-
   before_action :authenticate_customer!
 
   def index
@@ -13,13 +12,11 @@ class Public::FavoriteItemsController < ApplicationController
     favorite_item.item_id = params[:item_id]
     favorite_item.save
     @item = favorite_item.item
-    # redirect_to "/items/#{params[:item_id]}"
   end
 
   def destroy
     favorite_item = FavoriteItem.find_by(item_id: params[:item_id])
     favorite_item.destroy
     @item = favorite_item.item
-    # redirect_to "/items/#{params[:item_id]}"
   end
 end

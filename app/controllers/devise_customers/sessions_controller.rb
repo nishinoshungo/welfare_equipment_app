@@ -27,13 +27,12 @@ class DeviseCustomers::SessionsController < Devise::SessionsController
 
   def reject_customer
     @customer = Customer.find_by(email: params[:customer][:email].downcase)
-    if (@customer.valid_password?(params[:customer][:password]) && (@customer.active_for_authentication? == false))
+    if @customer.valid_password?(params[:customer][:password]) &&
+      (@customer.active_for_authentication? == false)
       flash[:error] = "退会済みです。"
       render :new
     end
-
   end
-
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])

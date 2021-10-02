@@ -1,5 +1,4 @@
 class Public::ItemsController < ApplicationController
-
   before_action :authenticate_customer!, only: [:recommend]
 
   def index
@@ -19,8 +18,12 @@ class Public::ItemsController < ApplicationController
   end
 
   def search
-    if params[:keyword].present? #パラメーターのkeywordに値が入っている場合
-      @items = Item.page(params[:page]).per(8).where("name LIKE ?", "%#{params[:keyword]}%").where.not(is_active: "レンタル不可") #itemsテーブルのnameカラムを検索し、パラメーターの値と部分一致するものを取得
+    if params[:keyword].present? # パラメーターのkeywordに値が入っている場合
+      # itemsテーブルのnameカラムを検索し、パラメーターの値と部分一致するものを取得
+      @items = Item.page(params[:page]).per(8).where(
+        "name LIKE ?",
+        "%#{params[:keyword]}%",
+      ).where.not(is_active: "レンタル不可")
     else
       @items = Item.none
     end
@@ -43,5 +46,4 @@ class Public::ItemsController < ApplicationController
   def recommend
     @genres = Genre.all
   end
-
 end

@@ -15,5 +15,4 @@ class Public::FavoriteItemsControllerTest < ActionDispatch::IntegrationTest
     get public_favorite_items_destroy_url
     assert_response :success
   end
-
 end

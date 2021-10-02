@@ -25,5 +25,4 @@ class Public::OrdersControllerTest < ActionDispatch::IntegrationTest
     get public_orders_complete_url
     assert_response :success
   end
-
 end

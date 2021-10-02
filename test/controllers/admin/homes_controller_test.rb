@@ -10,5 +10,4 @@ class Admin::HomesControllerTest < ActionDispatch::IntegrationTest
     get admin_homes_menu_url
     assert_response :success
   end
-
 end

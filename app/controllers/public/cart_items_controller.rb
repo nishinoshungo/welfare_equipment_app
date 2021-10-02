@@ -1,19 +1,16 @@
 class Public::CartItemsController < ApplicationController
-
-
-
   def index
     @cart_items = current_customer.cart_items
   end
 
   def create
     @cart_item = CartItem.new(cart_item_params)
-    # binding.pry
-    if @cart_item.amount == nil
+    if @cart_item.amount.nil?
       @cart_item = CartItem.new
       @review = Review.new
       @genres = Genre.all
       @item = Item.find(params[:cart_item][:item_id])
+      @reviews = @item.reviews.page(params[:page]).per(5).reverse_order
       flash[:alert] = "数量を指定してください。"
       render "public/items/show"
       return
@@ -43,8 +40,8 @@ class Public::CartItemsController < ApplicationController
   end
 
   private
+
   def cart_item_params
     params.require(:cart_item).permit(:item_id, :customer_id, :amount)
   end
-
 end

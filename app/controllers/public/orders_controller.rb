@@ -1,5 +1,4 @@
 class Public::OrdersController < ApplicationController
-
   before_action :authenticate_customer!
 
   def index
@@ -26,7 +25,7 @@ class Public::OrdersController < ApplicationController
       order_item.amount = cart_item.amount
       order_item.save
 
-      #商品を購入した分だけ在庫数を減らす
+      # 商品を購入した分だけ在庫数を減らす
       item = Item.find(order_item.item_id)
       item.stock = item.stock - order_item.amount
       if item.stock == 0

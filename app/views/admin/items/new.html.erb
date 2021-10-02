@@ -1,5 +1,6 @@
 <h4>商品新規登録</h4>
 <%= form_with model: @item, url: "/admin/items", local:true do |f| %>
+  <%= render 'layouts/error_messages', model: f.object %>
   <table class="table table-borderless mt-5">
     <tbody>
       <tr>
@@ -18,7 +19,7 @@
       </tr>
 
       <tr>
-        <td><label>ジャンル</label></td>
+        <td><label for="item_genre_id">ジャンル</label></td>
         <td><%= f.collection_select(:genre_id, @genres, :id, :name, {prompt: "ジャンルを選択してください"}) %></td>
       </tr>
 

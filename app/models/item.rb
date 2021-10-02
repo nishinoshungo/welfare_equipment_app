@@ -9,6 +9,15 @@ class Item < ApplicationRecord
 
   attachment :image
 
-  enum is_active: {レンタル可: true, レンタル不可: false}
+  enum is_active: {
+    レンタル可: true,
+    レンタル不可: false,
+  }
 
+  validates :name, presence: true
+  validates :image, presence: true
+  validates :introduction, presence: true
+  validates :price, presence: true
+  validates :stock, presence: true
+  validates :is_active, presence: true
 end

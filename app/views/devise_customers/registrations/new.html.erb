@@ -37,7 +37,7 @@
       </tr>
       <tr>
         <td><%= f.label :"パスワード(確認用)" %></td>
-        <td><%= f.password_field :password, autocomplete: "new-password" %></td>
+        <td><%= f.password_field :password, autocomplete: "new-password", name: "customer[confirm-pass]" %></td>
       </tr>
     </tbody>
   </table>

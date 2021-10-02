@@ -25,5 +25,4 @@ class Public::ReviewsControllerTest < ActionDispatch::IntegrationTest
     get public_reviews_destroy_url
     assert_response :success
   end
-
 end

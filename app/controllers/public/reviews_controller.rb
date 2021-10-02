@@ -1,5 +1,4 @@
 class Public::ReviewsController < ApplicationController
-
   before_action :authenticate_customer!
 
   def new
@@ -7,12 +6,6 @@ class Public::ReviewsController < ApplicationController
   end
 
   def create
-    # review = Review.new(review_params)
-    # review.item_id = params[:item_id]
-    # review.customer_id = current_customer.id
-    # review.save
-    # redirect_to "/items/#{params[:item_id]}"
-
     review = Review.new(review_params)
     review.item_id = params[:item_id]
     review.customer_id = current_customer.id
@@ -36,12 +29,11 @@ class Public::ReviewsController < ApplicationController
     review.destroy
     @item = review.item
     @reviews = @item.reviews.page(params[:page]).per(5).reverse_order
-    # redirect_to "/items/#{params[:item_id]}"
   end
 
   private
+
   def review_params
     params.require(:review).permit(:comment, :rate)
   end
-
 end

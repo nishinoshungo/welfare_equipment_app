@@ -25,5 +25,4 @@ class Admin::CategoriesControllerTest < ActionDispatch::IntegrationTest
     get admin_categories_destroy_url
     assert_response :success
   end
-
 end

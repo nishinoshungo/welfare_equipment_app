@@ -1,12 +1,11 @@
 class Public::ContactsController < ApplicationController
-
   def new
     @contact = Contact.new
   end
 
   def confirm
     @contact = Contact.new(contact_params)
-    if @contact.invalid? #エラーが発生した場合
+    if @contact.invalid? # エラーが発生した場合
       render :new
     end
   end
@@ -29,11 +28,9 @@ class Public::ContactsController < ApplicationController
   def complete
   end
 
-
   private
 
   def contact_params
     params.require(:contact).permit(:name, :email, :subject, :message)
   end
-
 end
