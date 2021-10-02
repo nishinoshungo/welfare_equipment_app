@@ -7,7 +7,7 @@ FactoryBot.define do
     postal_code {Faker::Number.number(digits: 7)}
     address {Faker::Lorem.characters(number: 10)}
     telephone_number {Faker::Number.number(digits: 10)}
-    burden_ratio {1}
+    burden_ratio {2}
     email {Faker::Internet.email}
     password {"password"}
     encrypted_password {"password"}
