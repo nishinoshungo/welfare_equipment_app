@@ -26,7 +26,7 @@ class Customer < ApplicationRecord
     "退会": false,
   }
 
-  def active_for_authentication?
+  def active_for_authentication? # 会員ステータスが"有効"の場合ログインできる。"退会"の場合はログインできない。
     super && (is_active == "有効")
   end
 
@@ -40,5 +40,5 @@ class Customer < ApplicationRecord
   validates :burden_ratio, presence: true
   validates :is_active, presence: true
   validates :email, presence: true
-  validates :password, presence: true
+  # validates :password, presence: true
 end

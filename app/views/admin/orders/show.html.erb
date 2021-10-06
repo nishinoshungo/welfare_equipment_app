@@ -12,20 +12,23 @@
         </tr>
       </thead>
       <tbody>
-        <% total_price = 0 %>
         <% @order.order_items.each do |order_item| %>
-          <% subtotal = order_item.item.price * order_item.amount %>
           <tr>
             <td>
               <%= link_to admin_item_path(order_item.item_id) do %>
                 <%= order_item.item.name %>
               <% end %>
             </td>
-            <td><%= order_item.item.price.to_s(:delimited) %></td>
-            <td><%= order_item.amount %></td>
-            <td><%= subtotal.to_s(:delimited) %></td>
+            <td>
+              <%= order_item.item.price.to_s(:delimited) %>
+            </td>
+            <td>
+              <%= order_item.amount %>
+            </td>
+            <td>
+              <%= subtotal(order_item.item.price, order_item.amount).to_s(:delimited) %>
+            </td>
           </tr>
-          <% total_price = total_price + subtotal %>
         <% end %>
       </tbody>
     </table>
@@ -66,11 +69,13 @@
       <tbody>
         <tr>
           <td>合計金額</td>
-          <td><%= total_price.to_s(:delimited) %></td>
+          <td><%= total_price(@order.order_items).to_s(:delimited) %></td>
         </tr>
         <tr>
           <td><%= @order.customer.burden_ratio %>額</td>
-          <td><%= (total_price * @order.customer.burden_ratio.to_i * 0.1).floor.to_s(:delimited) %></td>
+          <td>
+            <%= copayment(total_price(@order.order_items), @order.customer) %>
+          </td>
         </tr>
       </tbody>
     </table>

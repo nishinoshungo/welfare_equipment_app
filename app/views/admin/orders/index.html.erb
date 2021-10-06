@@ -14,7 +14,7 @@
         <td><%= order.id %></td>
         <td>
           <%= link_to admin_order_path(order) do%>
-            <%= order.created_at %>
+            <%= order.created_at.to_s(:datetime_jp) %>
           <% end %>
         </td>
         <td><%= order.customer.last_name %> <%= order.customer.first_name %></td>

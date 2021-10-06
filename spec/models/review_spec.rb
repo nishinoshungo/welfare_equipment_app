@@ -1,16 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe Review, type: :model do
-  let(:customer) {FactoryBot.create(:customer)}
-  let(:item) {Item.create(
+  let(:customer) { FactoryBot.create(:customer) }
+  let(:item) do
+    Item.create(
       genre_id: genre.id,
-      name: Faker::Lorem.characters(number:5),
-      image_id: Faker::Lorem.characters(number:5),
-      introduction: Faker::Lorem.characters(number:50),
-      price: Faker::Number.number(digits:5),
-      stock: Faker::Number.number(digits:2),
-    )}
-  let(:genre) {create(:genre)}
+      name: Faker::Lorem.characters(number: 5),
+      image_id: Faker::Lorem.characters(number: 5),
+      introduction: Faker::Lorem.characters(number: 50),
+      price: Faker::Number.number(digits: 5),
+      stock: Faker::Number.number(digits: 2),
+    )
+  end
+  let(:genre) { create(:genre) }
+
   context '#create' do
     it '有効な投稿内容の場合は保存されるか' do
       review = FactoryBot.build(:review, customer_id: customer.id, item_id: item.id)

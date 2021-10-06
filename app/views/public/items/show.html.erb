@@ -19,7 +19,9 @@
             </tr>
             <% if customer_signed_in? %>
               <tr>
-                <td><%= (@item.price * current_customer.burden_ratio.to_i * 0.1).floor.to_s(:delimited) %>円 (<%= current_customer.burden_ratio %>額)</td>
+                <td>
+                  <%= copayment(@item.price, current_customer) %>円 (<%= current_customer.burden_ratio %>額)
+                </td>
               </tr>
             <% end %>
             <tr>
@@ -73,6 +75,7 @@
             </div>
 
             <%= form_with model: @review, url: items_reviews_path(item_id: @item.id) do |f| %>
+              <%= render 'layouts/error_messages', model: f.object %>
               <div class="modal-body">
                 <div class="new_star">
                   <label>評価</label>
@@ -104,13 +107,13 @@
 
 <script>
   $('.average-star').raty({
-      readOnly: true,
-      score: function(){
-        return $(this).attr('data-score');
-      },
-      path: '/assets/',
-      size: 36
-    });
+    readOnly: true,
+    score: function(){
+      return $(this).attr('data-score');
+    },
+    path: '/assets/',
+    size: 36
+  });
 
   $('.new_star').raty({
     size: 36,

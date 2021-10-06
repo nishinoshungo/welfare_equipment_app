@@ -11,16 +11,13 @@
         </tr>
       </thead>
       <tbody>
-        <% total_price = 0 %>
         <% @order.order_items.each do |cart_item| %>
-          <% subtotal = cart_item.item.price * cart_item.amount %>
           <tr>
             <td><%= cart_item.item.name %></td>
             <td><%= cart_item.item.price.to_s(:delimited) %></td>
             <td><%= cart_item.amount %></td>
-            <td><%= subtotal.to_s(:delimited) %></td>
+            <td><%= subtotal(cart_item.item.price, cart_item.amount).to_s(:delimited) %></td>
           </tr>
-          <% total_price = total_price + subtotal %>
         <% end %>
       </tbody>
     </table>
@@ -30,11 +27,11 @@
       <tbody>
         <tr>
           <td>合計金額</td>
-          <td><%= total_price.to_s(:delimited) %></td>
+          <td><%= total_price(@order.order_items).to_s(:delimited) %></td>
         </tr>
         <tr>
           <td><%= current_customer.burden_ratio %>額</td>
-          <td><%= (total_price * current_customer.burden_ratio.to_i * 0.1).floor.to_s(:delimited) %></td>
+          <td><%= copayment(total_price(@order.order_items), current_customer) %></td>
         </tr>
       </tbody>
     </table>

@@ -10,6 +10,7 @@ class Public::ReviewsController < ApplicationController
     review.item_id = params[:item_id]
     review.customer_id = current_customer.id
     review.save
+    review
     @item = Item.find(params[:item_id])
     @reviews = @item.reviews.page(params[:page]).per(5).reverse_order
   end
