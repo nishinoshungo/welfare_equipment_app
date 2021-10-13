@@ -5,7 +5,5 @@ class CreateItemCategories < ActiveRecord::Migration[5.2]
       t.references :category, foreign_key: true
       t.timestamps
     end
-    add_foreign_key :item_categories, :items
-    add_foreign_key :item_categories, :categories
   end
 end

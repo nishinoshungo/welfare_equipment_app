@@ -5,7 +5,5 @@ class CreateFavoriteCategories < ActiveRecord::Migration[5.2]
       t.references :customer, foreign_key: true
       t.timestamps
     end
-    add_foreign_key :favorite_categories, :categories
-    add_foreign_key :favorite_categories, :customers
   end
 end
