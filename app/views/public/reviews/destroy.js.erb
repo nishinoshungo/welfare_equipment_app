@@ -1,1 +1,2 @@
 $('.reviews').html("<%= escape_javascript(render 'public/items/reviews', item: @item, reviews: @reviews) %>");
+$('.average_rate').html("<%= escape_javascript(render 'public/items/average_rate', item: @item) %>");

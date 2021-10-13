@@ -27,8 +27,8 @@
             <tr>
               <td><%= @item.introduction %></td>
             </tr>
-            <tr>
-              <td class="average-star" data-score="<%= @item.reviews.average(:rate).to_f.round(1) %>"></td>
+            <tr class="average_rate">
+              <%= render 'public/items/average_rate', item: @item %>
             </tr>
             <tr>
               <td>
@@ -106,15 +106,6 @@
 
 
 <script>
-  $('.average-star').raty({
-    readOnly: true,
-    score: function(){
-      return $(this).attr('data-score');
-    },
-    path: '/assets/',
-    size: 36
-  });
-
   $('.new_star').raty({
     size: 36,
     starOn: "<%= asset_path('star-on.png') %>",

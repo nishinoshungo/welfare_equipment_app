@@ -1,0 +1,15 @@
+<td class="average-star" data-score="<%= item.reviews.average(:rate).to_f.round(1) %>"></td>
+
+
+<script>
+  $('.average-star').raty({
+    readOnly: true,
+    score: function(){
+      return $(this).attr('data-score');
+    },
+    starOn: "<%= asset_path('star-on.png') %>",
+    starOff: "<%= asset_path('star-off.png') %>",
+    starHalf: "<%= asset_path('star-half.png') %>",
+    size: 36
+  });
+</script>

@@ -11,3 +11,6 @@ $('#exampleModal').modal('hide');
 
 <!--レビュー一覧の部分テンプレートを再読込する-->
 $('.reviews').html("<%= escape_javascript(render 'public/items/reviews', item: @item, reviews: @reviews) %>");
+
+<!--平均点数の部分テンプレートを再読込する-->
+$('.average_rate').html("<%= escape_javascript(render 'public/items/average_rate', item: @item) %>");
