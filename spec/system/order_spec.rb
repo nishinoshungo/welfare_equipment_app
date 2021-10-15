@@ -115,28 +115,6 @@ RSpec.describe "注文に関するテスト", type: :system do
       it "注文完了画面へと遷移するか" do
         expect(current_path).to eq "/orders/complete"
       end
-      it "注文一覧ページに注文した商品が表示されるか" do
-        click_on "ご注文履歴一覧"
-        expect(page).to have_content("ご注文履歴")
-        expect(page).to have_content(@item.name)
-        expect(page).to have_content((@item.price * @cart_item.amount).to_s(:delimited))
-      end
-    end
-
-    context "注文詳細画面" do
-      before do
-        click_on "注文を確定する"
-        click_on "ご注文履歴一覧"
-      end
-
-      it "注文詳細画面の表示が正しいか" do
-        expect(page).to have_content("ご注文詳細")
-      end
-      it "注文した商品の商品名、数量、金額が正しく表示されるか" do
-        expect(page).to have_content(@item.name)
-        expect(page).to have_content(@cart_item.amount)
-        expect(page).to have_content((@item.price * @cart_item.amount).to_s(:delimited))
-      end
     end
   end
 end

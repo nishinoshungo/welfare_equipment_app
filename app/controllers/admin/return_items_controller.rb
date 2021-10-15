@@ -18,5 +18,4 @@ class Admin::ReturnItemsController < ApplicationController
     @return_items = ReturnItem.all
     render :index
   end
-
 end

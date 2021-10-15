@@ -31,10 +31,9 @@ module ApplicationHelper
     total = 0
     orders.each do |order|
       order.order_items.each do |order_item|
-        total = total + billing_amount(order_item)
+        total += billing_amount(order_item)
       end
     end
     total
   end
-
 end
