@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :customers, only: [:index, :show, :edit, :update]
     resources :orders, only: [:index, :show]
     resources :categories, only: [:index, :create, :edit, :update, :destroy]
+    resources :return_items, only: [:index, :update]
     get '/', to: "homes#top"
     get '/menu', to: "homes#menu"
   end
@@ -55,6 +56,7 @@ Rails.application.routes.draw do
   get '/orders', to: 'public/orders#index'
   get '/orders/:id', to: 'public/orders#show'
   post '/orders', to: 'public/orders#create'
+  patch '/orders/order_items/:id', to: 'public/orders#update', as: :update_rental_status
 
   get '/items/reviews/new', to: 'public/reviews#new'
   post '/items/reviews', to: 'public/reviews#create'

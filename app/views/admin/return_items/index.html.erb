@@ -1,0 +1,37 @@
+<h4 class="mt-5">返却依頼一覧</h4>
+<table class="table mt-5">
+  <thead>
+    <tr>
+      <th>依頼日</th>
+      <th>名前</th>
+      <th>商品</th>
+      <th>数量</th>
+      <th>ステータス</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @return_items.each do |return_item| %>
+      <tr>
+        <td><%= return_item.created_at.to_s(:datetime_jp) %></td>
+        <td>
+          <%= link_to admin_customer_path(return_item.customer_id) do %>
+            <%= return_item.customer.last_name %> <%= return_item.customer.first_name %>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to admin_item_path(return_item.item_id) do %>
+            <%= return_item.item.name %>
+          <% end %>
+        </td>
+        <td><%= return_item.amount %></td>
+        <td><%= return_item.return_status %></td>
+        <td>
+          <% if return_item.return_status == "未返却" %>
+            <%= link_to "回収完了", admin_return_item_path(return_item.id), method: :patch, class: "btn btn-sm btn-outline-success" %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -6,6 +6,7 @@ class Item < ApplicationRecord
   has_many :item_categories, dependent: :destroy
   has_many :categories, through: :item_categories
   has_many :reviews, dependent: :destroy
+  has_many :return_items, dependent: :destroy
 
   attachment :image
 

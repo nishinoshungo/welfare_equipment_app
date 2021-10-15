@@ -5,10 +5,6 @@ class Public::OrdersController < ApplicationController
     @orders = current_customer.orders
   end
 
-  def show
-    @order = Order.find(params[:id])
-  end
-
   def create
     # 注文の確定
     order = Order.new
@@ -50,5 +46,17 @@ class Public::OrdersController < ApplicationController
   end
 
   def complete
+  end
+
+  def update
+    @order_item = OrderItem.find(params[:id])
+    @order_item.update(rental_status: "レンタル終了", end_date: DateTime.now)
+    ReturnItem.create(
+      item_id: @order_item.item_id,
+      customer_id: current_customer.id,
+      amount: @order_item.amount
+    )
+    @orders = current_customer.orders
+    render :index
   end
 end

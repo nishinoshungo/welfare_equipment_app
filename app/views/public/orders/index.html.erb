@@ -1,27 +1,68 @@
-<h4>ご注文履歴</h4>
+<h4>レンタル履歴</h4>
+
+<% if @orders.count == 0 %>
+  <div class="d-flex justify-content-center align-items-center" style="height: 400px;">
+    <h5 class="text-center" style="line-height: 40px;">レンタル履歴がありません。<br>
+      <%= link_to "商品を探す", items_path, class: "btn btn-outline-success btn-lg mt-3" %>
+    </h5>
+  </div>
+<% else %>
 <table class="table mt-5">
   <thead>
     <tr>
-      <th>ご注文日</th>
-      <th>ご注文商品</th>
-      <th>合計金額</th>
-      <th>ご負担額</th>
-      <th>ご注文詳細</th>
+      <th>商品</th>
+      <th>数量</th>
+      <th>レンタル期間</th>
+      <th>月額</th>
+      <th>ご請求額<br>（◯ヶ月分）</th>
+      <th>ステータス</th>
     </tr>
   </thead>
   <tbody>
     <% @orders.each do |order| %>
-      <tr>
-        <td><%= order.created_at.to_s(:datetime_jp) %></td>
-        <td>
-          <% order.order_items.each do |order_item| %>
-            <%= order_item.item.name %><br>
-          <% end %>
-        </td>
-        <td><%= total_price(order.order_items).to_s(:delimited) %></td>
-        <td><%= copayment(total_price(order.order_items), current_customer) %></td>
-        <td><%= link_to "表示する", "/orders/#{order.id}", class: "btn btn-primary" %></td>
-      </tr>
+      <% order.order_items.each do |order_item| %>
+        <tr>
+          <td>
+            <%= link_to "/items/#{order_item.item_id}" do %>
+              <%= order_item.item.name %>
+            <% end %>
+          </td>
+          <td><%= order_item.amount %></td>
+          <td>
+            <%= order_item.created_at.to_s(:datetime_jp) %> 〜<br>
+            <% if order_item.rental_status == "レンタル終了" %>
+              <%= order_item.end_date.to_s(:datetime_jp) %>
+            <% end %>
+          </td>
+          <td><%= subtotal(order_item.item.price, order_item.amount).to_s(:delimited) %></td>
+          <td>
+            <%= billing_amount(order_item).to_s(:delimited) %><br>
+            (<%= rental_period(order_item) %>ヶ月分)
+          </td>
+          <td>
+            <%= order_item.rental_status %><br>
+            <% if order_item.rental_status == "レンタル中" %>
+              <%= link_to "返却する", update_rental_status_path(order_item.id), method: :patch, class: "btn btn-outline-danger btn-sm mt-1", data: {confirm: "レンタルを終了しますか？"} %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>
+
+<div class="row d-flex justify-content-end">
+  <table class="table mt-5 col-4">
+    <tbody>
+      <tr>
+        <td>ご請求合計</td>
+        <td><%= total_billing_amount(@orders).to_s(:delimited) %></td>
+      </tr>
+      <tr>
+        <td><%= current_customer.burden_ratio %>額</td>
+        <td><%= copayment(total_billing_amount(@orders), current_customer) %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<% end %>

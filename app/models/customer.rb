@@ -10,6 +10,7 @@ class Customer < ApplicationRecord
   has_many :favorite_categories, dependent: :destroy
   has_many :reviews, dependent: :destroy
   has_many :categories, through: :favorite_categories
+  has_many :return_items, dependent: :destroy
 
   def already_favorited?(item) # ユーザーによって既に商品がお気に入り登録されてるか確かめるメソッド
     favorite_items.exists?(item_id: item.id)
